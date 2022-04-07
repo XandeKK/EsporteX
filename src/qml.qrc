@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Window/main.qml</file>
+        <file>Window/Home.qml</file>
+        <file>assets/threeDotsBlack.png</file>
+        <file>assets/threeLinesBlack.png</file>
+        <file>assets/Bell.png</file>
+        <file>assets/home.png</file>
+        <file>assets/profile.png</file>
+        <file>assets/letter.png</file>
+        <file>Window/Test.qml</file>
+        <file>Control/DrawerNavigation.qml</file>
+        <file>assets/about.png</file>
+        <file>assets/logout.png</file>
+        <file>assets/settings.png</file>
+        <file>Window/Notification.qml</file>
+        <file>assets/backArrow.png</file>
+        <file>Window/Notification/All.qml</file>
+        <file>Window/SwipeHome/ListGame.qml</file>
+        <file>Window/SwipeHome/Profile.qml</file>
+        <file>Window/SwipeHome/Chat.qml</file>
+        <file>assets/add.png</file>
+        <file>Window/Login.qml</file>
+        <file>assets/facebook.png</file>
+        <file>assets/google.png</file>
+        <file>assets/twitter.png</file>
+        <file>Window/PreferredSport.qml</file>
+    </qresource>
+</RCC>
