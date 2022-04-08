@@ -6,6 +6,8 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
+    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::Round);
+
     QQmlApplicationEngine engine;
     const QUrl url("qrc:/Window/main.qml");
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
