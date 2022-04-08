@@ -15,7 +15,6 @@
         <file>assets/settings.png</file>
         <file>Window/Notification.qml</file>
         <file>assets/backArrow.png</file>
-        <file>Window/Notification/All.qml</file>
         <file>Window/SwipeHome/ListGame.qml</file>
         <file>Window/SwipeHome/Profile.qml</file>
         <file>Window/SwipeHome/Chat.qml</file>
@@ -25,5 +24,12 @@
         <file>assets/google.png</file>
         <file>assets/twitter.png</file>
         <file>Window/PreferredSport.qml</file>
+        <file>Window/GameList.qml</file>
+        <file>assets/mark.png</file>
+        <file>assets/calendar.png</file>
+        <file>assets/time.png</file>
+        <file>assets/time.svg</file>
+        <file>Window/CreateGame.qml</file>
+        <file>Window/InfoGame.qml</file>
     </qresource>
 </RCC>

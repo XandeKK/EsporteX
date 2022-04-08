@@ -35,6 +35,7 @@ Page {
                 id: mouseAreaPane
                 z: 1
                 anchors.fill: parent
+                onClicked: stack.push("qrc:/Window/GameList.qml")
             }
             Pane {
                 anchors.fill: parent
@@ -76,5 +77,7 @@ Page {
 
         icon.source: "qrc:/assets/add.png"
         icon.color: "white"
+
+        onClicked: stack.push("qrc:/Window/CreateGame.qml")
     }
 }

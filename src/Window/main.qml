@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 
 ApplicationWindow {
@@ -9,9 +10,11 @@ ApplicationWindow {
     title: qsTr("EsporteX")
     id: root
 
+    Material.theme: Material.Dark
+
     StackView {
         id: stack
         anchors.fill: parent
-        initialItem: "qrc:/Window/PreferredSport.qml"
+        initialItem: "qrc:/Window/Home.qml"
     }
 }
