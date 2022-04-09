@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.15
 
 Page {
     id: notification
+
     header: ToolBar {
         RowLayout {
             anchors.fill: parent
@@ -28,6 +29,21 @@ Page {
             ToolButton {
                 id: toolButtonKebabMenu
                 icon.source: "qrc:/assets/threeDotsBlack.png"
+                onClicked: contextMenu.open()
+                Menu {
+                    id: contextMenu
+                    x: -(width * 80 / 100)
+                    y: 10
+                    MenuItem {
+                        icon.source: "qrc:/assets/trash.png"
+                        text: "Delete All"
+//                        onClicked: listModel.clear()
+                    }
+                    MenuItem {
+                        icon.source: "qrc:/assets/settings.png"
+                        text: "Settings"
+                    }
+                }
             }
         }
     }
@@ -37,7 +53,14 @@ Page {
         anchors.fill: parent
         spacing: 20
 
-        model: 10
+        model: ListModel {
+            id: listModel
+            ListElement {name: "Alexandre"}
+            ListElement {name: "Alex"}
+            ListElement {name: "Xande"}
+            ListElement {name: "X"}
+
+        }
 
         header: Item {
             height: 30
@@ -66,12 +89,12 @@ Page {
                     anchors.leftMargin: parent.width * 5 / 100
                     width: parent.width * 55 / 100
                     clip: true
-                    text: "Alexandre"
+                    text: model.name
                 }
 
                 Label {
                     id: textNotification
-                    text: qsTr("Opa RAPAZIAD, vai ter jogo de volei no forrodromo na quinta feira Opa RAPAZIAD, vai ter jogo de volei no forrodromo na quinta feira Opa RAPAZIAD, vai ter jogo de volei no forrodromo na quinta feiraOpa RAPAZIAD, vai ter jogo de volei no forrodromo na quinta feira")
+                    text: qsTr("Opa RAPAZIAD, va as sd a das dai ter jogo de volei no forrodromo na quinta feira Opa RAPAZIAD, vai ter jogo de volei no forrodromo na quinta feira Opa RAPAZIAD, vai ter jogo de volei no forrodromo na quinta feiraOpa RAPAZIAD, vai ter jogo de volei no forrodromo na quinta feira")
                     anchors.left: imagePerson.right
                     anchors.leftMargin: parent.width * 5 / 100
                     anchors.top: namePerson.bottom
@@ -79,9 +102,8 @@ Page {
                     anchors.right: kebabMenu.left
                     anchors.rightMargin: parent.width * 5 / 100
                     width: parent.width * 60 / 100
-                    height: parent.height - namePerson.height
+                    elide: "ElideRight"
                     clip: true
-                    wrapMode: Text.WordWrap
                 }
 
                 Label {
@@ -93,9 +115,10 @@ Page {
                 RoundButton {
                     id: kebabMenu
                     anchors.right: parent.right
-                    icon.source: "qrc:/assets/threeDotsBlack.png"
+                    icon.source: "qrc:/assets/trash.png"
                     anchors.verticalCenter: parent.verticalCenter
                     Material.elevation: 0
+                    onClicked: listModel.remove(index)
                 }
             }
         }

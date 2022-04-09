@@ -24,15 +24,43 @@ Drawer {
         anchors.left: parent.left
         anchors.right: parent.right
         height: contentHeight
+        interactive: false
 
         model: ListModel {
+            ListElement {icon: "qrc:/assets/home.png"; name: "Home"}
             ListElement {icon: "qrc:/assets/profile.png"; name: "Profile"}
+            ListElement {icon: "qrc:/assets/letter.png"; name: "Chat"}
         }
 
         delegate: ItemDelegate {
             text: name
             width: listViewHeader.width
             icon.source: model.icon
+            highlighted: {
+                if(tabBar.currentIndex == 0 && name === "Home"){
+                    return true
+                }else if(tabBar.currentIndex == 1 && name === "Profile"){
+                    return true
+                }else if(tabBar.currentIndex == 2 && name === "Chat"){
+                    return true
+                }else {
+                    return false
+                }
+            }
+            onClicked: {
+                switch (name) {
+                case "Home":
+                    tabBar.currentIndex = 0
+                    break
+                case "Profile":
+                    tabBar.currentIndex = 1
+                    break
+                case "Chat":
+                    tabBar.currentIndex = 2
+                    break
+                }
+                close()
+            }
         }
     }
 
@@ -50,6 +78,7 @@ Drawer {
         anchors.left: parent.left
         anchors.right: parent.right
         height: contentHeight
+        interactive: false
 
         model: ListModel {
             ListElement {icon: "qrc:/assets/settings.png"; name: "Settings"}
@@ -61,6 +90,20 @@ Drawer {
             text: name
             width: listViewFooter.width
             icon.source: model.icon
+
+            onClicked: {
+                switch (name){
+                case "Settings":
+                    close()
+                    stack.push("qrc:/Window/Settings.qml")
+                    break
+                case "Logout":
+                    close()
+                    stack.pop(null)
+                    stack.push("qrc:/Window/Login.qml")
+                    break
+                }
+            }
         }
     }
 }

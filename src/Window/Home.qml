@@ -42,11 +42,6 @@ Page {
                 icon.source: "qrc:/assets/Bell.png"
                 onClicked: stack.push("qrc:/Window/Notification.qml")
             }
-
-            ToolButton {
-                id: toolButtonKebabMenu
-                icon.source: "qrc:/assets/threeDotsBlack.png"
-            }
         }
     }
 

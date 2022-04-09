@@ -10,6 +10,8 @@ ApplicationWindow {
     title: qsTr("EsporteX")
     id: root
 
+    readonly property real dip: Screen.pixelDensity / (96 / 25.4)
+
     Material.theme: Material.Dark
 
     StackView {

@@ -35,7 +35,7 @@ Page {
                 id: mouseAreaPane
                 z: 1
                 anchors.fill: parent
-                onClicked: stack.push("qrc:/Window/GameList.qml")
+                onClicked: stack.push("qrc:/Window/SportList.qml")
             }
             Pane {
                 anchors.fill: parent

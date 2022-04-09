@@ -27,6 +27,13 @@ Page {
             ToolButton {
                 id: toolButtonKebabMenu
                 icon.source: "qrc:/assets/threeDotsBlack.png"
+                onClicked: contextMenu.open()
+                Menu {
+                    id: contextMenu
+                    x: -(width * 80 / 100)
+                    y: 10
+                    MenuItem { icon.source: "qrc:/assets/settings.png"; text: "Settings" }
+                }
             }
         }
     }
@@ -43,7 +50,7 @@ Page {
         }
 
         footer: Item {
-            height: 30
+            height: 30 + button.height
         }
 
         delegate: Pane {
@@ -113,7 +120,7 @@ Page {
                 Column {
                     anchors.left: columnLeft.right
                     anchors.leftMargin: parent.width * 2.5 / 100
-                    anchors.right: kebabMenu.left
+                    anchors.right: parent.right
                     height: parent.height
                     spacing: 10
 
@@ -165,15 +172,24 @@ Page {
                         }
                     }
                 }
-
-                RoundButton {
-                    id: kebabMenu
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    icon.source: "qrc:/assets/threeDotsBlack.png"
-                    Material.elevation: 0
-                }
             }
         }
+    }
+
+    RoundButton {
+        id: button
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: anchors.rightMargin
+        anchors.right: parent.right
+        anchors.rightMargin: parent.width * 5 / 100
+        width: 70
+        height: 70
+
+        highlighted: true
+
+        icon.source: "qrc:/assets/add.png"
+        icon.color: "white"
+
+        onClicked: stack.push("qrc:/Window/CreateGame.qml")
     }
 }
