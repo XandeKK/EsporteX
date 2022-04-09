@@ -13,6 +13,7 @@ Page {
         horizontalAlignment: "AlignHCenter"
         anchors.left: parent.left
         z: 1
+        font.pixelSize: fontSizeLarge
         background: Rectangle {
             anchors.fill: parent
             color: "white"
@@ -93,6 +94,7 @@ Page {
                     anchors.topMargin: parent.height * 10 / 100
                     text: sport
                     font.bold: true
+                    font.pixelSize: fontSizeNormal
                 }
             }
         }
@@ -109,5 +111,6 @@ Page {
         highlighted: true
 
         onClicked: stack.replace("qrc:/Window/Home.qml")
+        font.pixelSize: fontSizeNormal
     }
 }

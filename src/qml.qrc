@@ -27,11 +27,14 @@
         <file>Window/SportList.qml</file>
         <file>assets/mark.png</file>
         <file>assets/calendar.png</file>
-        <file>assets/time.png</file>
         <file>assets/time.svg</file>
         <file>Window/CreateGame.qml</file>
         <file>Window/InfoGame.qml</file>
         <file>Window/Settings.qml</file>
         <file>assets/trash.png</file>
+        <file>assets/calendarDark.png</file>
+        <file>assets/markDark.png</file>
+        <file>assets/profileDark.png</file>
+        <file>assets/timeDark.png</file>
     </qresource>
 </RCC>

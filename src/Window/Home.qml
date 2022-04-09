@@ -7,7 +7,6 @@ import "./SwipeHome"
 
 Page {
     header: ToolBar {
-        Material.primary: Material.DeepPurple
         RowLayout {
             anchors.fill: parent
 
@@ -34,7 +33,7 @@ Page {
                 verticalAlignment: Qt.AlignVCenter
                 Layout.fillWidth: true
                 font.bold: true
-                font.pointSize: 12
+                font.pixelSize: fontSizeToolBar
             }
 
             ToolButton {

@@ -23,7 +23,7 @@ Page {
                 verticalAlignment: Qt.AlignVCenter
                 Layout.fillWidth: true
                 font.bold: true
-                font.pointSize: 12
+                font.pixelSize: fontSizeToolBar
             }
 
             ToolButton {
@@ -37,11 +37,12 @@ Page {
                     MenuItem {
                         icon.source: "qrc:/assets/trash.png"
                         text: "Delete All"
-//                        onClicked: listModel.clear()
+                        font.pixelSize: fontSizeNormal
                     }
                     MenuItem {
                         icon.source: "qrc:/assets/settings.png"
                         text: "Settings"
+                        font.pixelSize: fontSizeNormal
                     }
                 }
             }
@@ -79,7 +80,7 @@ Page {
                     source: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
                     anchors.verticalCenter: parent.verticalCenter
                     fillMode: Image.PreserveAspectCrop
-                    width: parent.height
+                    width: parent.height * 70 / 100
                     height: width
                 }
 
@@ -90,6 +91,8 @@ Page {
                     width: parent.width * 55 / 100
                     clip: true
                     text: model.name
+                    font.pixelSize: fontSizeNormal
+                    font.bold: true
                 }
 
                 Label {
@@ -101,15 +104,20 @@ Page {
                     anchors.topMargin: parent.height * 10 / 100
                     anchors.right: kebabMenu.left
                     anchors.rightMargin: parent.width * 5 / 100
+                    anchors.bottom: parent.bottom
                     width: parent.width * 60 / 100
                     elide: "ElideRight"
+                    wrapMode: "WordWrap"
                     clip: true
+                    font.pixelSize: fontSizeNormal
+                    Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
                 }
 
                 Label {
                     id: dateNotification
                     anchors.right: kebabMenu.left
                     text: "10 mar"
+                    font.pixelSize: fontSizeNormal
                 }
 
                 RoundButton {

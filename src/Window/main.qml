@@ -10,13 +10,53 @@ ApplicationWindow {
     title: qsTr("EsporteX")
     id: root
 
-    readonly property real dip: Screen.pixelDensity / (96 / 25.4)
+    property bool isDark: false
+    property int materialAccentColor: 0
 
-    Material.theme: Material.Dark
+    readonly property real dip: Qt.platform.os === "android" ? Screen.pixelDensity / (160 / 25.4) : Screen.pixelDensity / (96 / 25.4)
+    readonly property real fontSizeSmall: 11 * dip
+    readonly property real fontSizeNormal: 12 * dip
+    readonly property real fontSizeLarge: 13 * dip
+    readonly property real fontSizeToolBar: 16 * dip
+
+    Material.theme: isDark ? Material.Dark : Material.Light
+    Material.accent: materialAccentColor
 
     StackView {
         id: stack
         anchors.fill: parent
         initialItem: "qrc:/Window/Home.qml"
+        pushEnter: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 0
+                to:1
+                duration: 200
+            }
+        }
+        pushExit: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 1
+                to:0
+                duration: 200
+            }
+        }
+        popEnter: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 0
+                to:1
+                duration: 200
+            }
+        }
+        popExit: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 1
+                to:0
+                duration: 200
+            }
+        }
     }
 }

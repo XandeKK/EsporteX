@@ -15,6 +15,7 @@ Drawer {
         Label {
             text: "Content goes here!"
             anchors.centerIn: parent
+            font.pixelSize: fontSizeNormal
         }
     }
 
@@ -36,6 +37,7 @@ Drawer {
             text: name
             width: listViewHeader.width
             icon.source: model.icon
+            font.pixelSize: fontSizeNormal
             highlighted: {
                 if(tabBar.currentIndex == 0 && name === "Home"){
                     return true
@@ -90,6 +92,7 @@ Drawer {
             text: name
             width: listViewFooter.width
             icon.source: model.icon
+            font.pixelSize: fontSizeNormal
 
             onClicked: {
                 switch (name){

@@ -31,8 +31,7 @@ Page {
         delegate: ItemDelegate {
             width: parent.width * 30 / 100
             height: width
-            MouseArea {
-                id: mouseAreaPane
+            ItemDelegate {
                 z: 1
                 anchors.fill: parent
                 onClicked: stack.push("qrc:/Window/SportList.qml")
@@ -40,7 +39,6 @@ Page {
             Pane {
                 anchors.fill: parent
                 Material.elevation: 3
-                Material.background: mouseAreaPane.pressed ? Material.Grey : Material.White
 
                 Image {
                     id: sportImage
@@ -60,6 +58,7 @@ Page {
                     anchors.topMargin: parent.height * 10 / 100
                     text: sport
                     font.bold: true
+                    font.pixelSize: fontSizeNormal
                 }
             }
         }

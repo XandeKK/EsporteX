@@ -21,7 +21,7 @@ Page {
                 verticalAlignment: Qt.AlignVCenter
                 Layout.fillWidth: true
                 font.bold: true
-                font.pointSize: 12
+                font.pixelSize: fontSizeToolBar
             }
 
             ToolButton {
@@ -56,7 +56,6 @@ Page {
         delegate: Pane {
             Material.elevation: 6
             width: listViewNotification.width * 90 / 100
-            height: listViewNotification.height * 20 / 100
             anchors.horizontalCenter: parent.horizontalCenter
 
             ItemDelegate {
@@ -77,7 +76,7 @@ Page {
 
                         Image {
                             id: imageProfile
-                            source: "qrc:/assets/profile.png"
+                            source: Material.theme == Material.Dark ? "qrc:/assets/profileDark.png" : "qrc:/assets/profile.png"
                             width: height
                             height: parent.height
                             antialiasing: true
@@ -89,6 +88,7 @@ Page {
                             height: parent.height
                             text: qsTr("Alexandre")
                             verticalAlignment: Text.AlignVCenter
+                            font.pixelSize: fontSizeNormal
                         }
                     }
 
@@ -99,7 +99,7 @@ Page {
 
                         Image {
                             id: imageMap
-                            source: "qrc:/assets/mark.png"
+                            source: Material.theme == Material.Dark ? "qrc:/assets/markDark.png" : "qrc:/assets/mark.png"
                             width: height
                             height: parent.height
                             antialiasing: true
@@ -114,6 +114,7 @@ Page {
                             verticalAlignment: Text.AlignVCenter
                             clip: true
                             elide: Text.ElideRight
+                            font.pixelSize: fontSizeNormal
                         }
                     }
                 }
@@ -131,7 +132,7 @@ Page {
 
                         Image {
                             id: imageCalendar
-                            source: "qrc:/assets/calendar.png"
+                            source: Material.theme == Material.Dark ? "qrc:/assets/calendarDark.png" : "qrc:/assets/calendar.png"
                             width: height
                             height: parent.height
                             antialiasing: true
@@ -145,6 +146,7 @@ Page {
                             height: parent.height
                             verticalAlignment: Text.AlignVCenter
                             clip: true
+                            font.pixelSize: fontSizeNormal
                         }
                     }
 
@@ -155,7 +157,7 @@ Page {
 
                         Image {
                             id: imageTime
-                            source: "qrc:/assets/time.svg"
+                            source: Material.theme == Material.Dark ? "qrc:/assets/timeDark.png" : "qrc:/assets/time.svg"
                             width: height
                             height: parent.height
                             antialiasing: true
@@ -169,6 +171,7 @@ Page {
                             height: parent.height
                             verticalAlignment: Text.AlignVCenter
                             clip: true
+                            font.pixelSize: fontSizeNormal
                         }
                     }
                 }
@@ -184,6 +187,7 @@ Page {
         anchors.rightMargin: parent.width * 5 / 100
         width: 70
         height: 70
+        font.pixelSize: fontSizeNormal
 
         highlighted: true
 

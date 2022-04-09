@@ -25,6 +25,7 @@ Page {
             anchors.topMargin: parent.height * 5 / 100
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Agostinho Carrara"
+            font.pixelSize: fontSizeNormal
         }
 
         Label {
@@ -33,6 +34,7 @@ Page {
             anchors.topMargin: parent.height * 2.5 / 100
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Lagarto, Sergipe"
+            font.pixelSize: fontSizeNormal
         }
     }
     Rectangle {
@@ -59,6 +61,7 @@ Page {
         delegate: ItemDelegate {
             width: listViewProfile.width
             text: model.text
+            font.pixelSize: fontSizeNormal
         }
     }
 }

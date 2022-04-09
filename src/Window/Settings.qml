@@ -21,7 +21,7 @@ Page {
                 verticalAlignment: Qt.AlignVCenter
                 Layout.fillWidth: true
                 font.bold: true
-                font.pointSize: 12
+                font.pixelSize: fontSizeToolBar
             }
 
             ToolButton {
@@ -49,6 +49,7 @@ Page {
                     anchors.leftMargin: parent.width * 5 / 100
                     verticalAlignment: "AlignVCenter"
                     font.bold: true
+                    font.pixelSize: fontSizeNormal
                 }
 
                 Rectangle {
@@ -65,18 +66,20 @@ Page {
                 color: "#11000000"
 
                 Label {
-                    text: qsTr("Themes")
+                    text: qsTr("Dark Mode")
                     anchors.left: parent.left
                     anchors.leftMargin: parent.width * 8 / 100
                     anchors.right: switchThemes.left
                     height: parent.height
                     verticalAlignment: "AlignVCenter"
+                    font.pixelSize: fontSizeNormal
                 }
 
                 Switch {
                     id: switchThemes
                     anchors.right: parent.right
                     height: parent.height
+                    onCheckedChanged: isDark = checked
                 }
 
                 Rectangle {
@@ -99,6 +102,7 @@ Page {
                     anchors.right: combomBoxMaterialAccent.left
                     height: parent.height
                     verticalAlignment: "AlignVCenter"
+                    font.pixelSize: fontSizeNormal
                 }
 
                 ComboBox {
@@ -107,7 +111,30 @@ Page {
                     anchors.rightMargin: parent.width * 2.5 / 100
                     height: parent.height * 80 / 100
                     anchors.verticalCenter: parent.verticalCenter
-                    model: ["Red", "Blue", "Purple", "Green"]
+                    model: [
+                        "Red",
+                        "Pink",
+                        "Purple",
+                        "DeepPurple",
+                        "Indigo",
+                        "Blue",
+                        "LightBlue",
+                        "Cyan",
+                        "Teal",
+                        "Green",
+                        "LightGreen",
+                        "Lime",
+                        "Yellow",
+                        "Amber",
+                        "Orange",
+                        "DeepOrange",
+                        "Brown",
+                        "Grey",
+                        "BlueGrey"
+                    ]
+                    currentIndex: materialAccentColor
+                    onCurrentIndexChanged: materialAccentColor = currentIndex
+                    font.pixelSize: fontSizeNormal
                 }
 
                 Rectangle {

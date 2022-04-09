@@ -10,7 +10,7 @@ Page {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: parent.height * 5 / 100
-        font.pointSize: 12
+        font.pixelSize: fontSizeLarge
     }
 
     ListView {
@@ -35,6 +35,7 @@ Page {
             icon.width: 50
             icon.height: 50
             text: model.name
+            font.pixelSize: fontSizeNormal
         }
     }
 
@@ -43,8 +44,8 @@ Page {
         anchors.bottomMargin: parent.height * 5 / 100
         anchors.horizontalCenter: parent.horizontalCenter
         text: "Enter as a guest"
-        font.pointSize: 11
-        color: mouseAreaGuest.pressed ? Material.color(Material.Pink) : "black"
+        font.pixelSize: fontSizeNormal
+
         MouseArea {
             id: mouseAreaGuest
             anchors.fill: parent
