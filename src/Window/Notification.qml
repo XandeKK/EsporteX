@@ -5,6 +5,71 @@ import QtQuick.Layouts 1.15
 
 Page {
     id: notification
+    property int indexList
+
+    Dialog {
+        id: dialogDeleteOne
+        title: "Are you sure?"
+        modal: true
+        anchors.centerIn: parent
+        font.pixelSize: fontSizeNormal
+
+        DialogButtonBox {
+            Button {
+                text: qsTr("No")
+                DialogButtonBox.buttonRole: DialogButtonBox.NoRole
+                Material.background: Material.Red
+                Material.foreground: "White"
+                font.pixelSize: fontSizeNormal
+            }
+            Button {
+                text: qsTr("Yes")
+                DialogButtonBox.buttonRole: DialogButtonBox.YesRole
+                Material.background: Material.Green
+                Material.foreground: "White"
+                font.pixelSize: fontSizeNormal
+            }
+
+            onAccepted: {
+                dialogDeleteOne.close()
+                listModel.remove(indexList)
+            }
+
+            onRejected: dialog.close()
+        }
+    }
+
+    Dialog {
+        id: dialogDeleteAll
+        title: "Are you sure?"
+        modal: true
+        anchors.centerIn: parent
+        font.pixelSize: fontSizeNormal
+
+        DialogButtonBox {
+            Button {
+                text: qsTr("No")
+                DialogButtonBox.buttonRole: DialogButtonBox.NoRole
+                Material.background: Material.Red
+                Material.foreground: "White"
+                font.pixelSize: fontSizeNormal
+            }
+            Button {
+                text: qsTr("Yes")
+                DialogButtonBox.buttonRole: DialogButtonBox.YesRole
+                Material.background: Material.Green
+                Material.foreground: "White"
+                font.pixelSize: fontSizeNormal
+            }
+
+            onAccepted: {
+                dialogDeleteAll.close()
+                listModel.clear()
+            }
+
+            onRejected: dialog.close()
+        }
+    }
 
     header: ToolBar {
         RowLayout {
@@ -34,10 +99,12 @@ Page {
                     id: contextMenu
                     x: -(width * 80 / 100)
                     y: 10
+                    font.pixelSize: fontSizeNormal
                     MenuItem {
                         icon.source: "qrc:/assets/trash.png"
                         text: "Delete All"
                         font.pixelSize: fontSizeNormal
+                        onClicked: dialogDeleteAll.open()
                     }
                     MenuItem {
                         icon.source: "qrc:/assets/settings.png"
@@ -126,7 +193,10 @@ Page {
                     icon.source: "qrc:/assets/trash.png"
                     anchors.verticalCenter: parent.verticalCenter
                     Material.elevation: 0
-                    onClicked: listModel.remove(index)
+                    onClicked: {
+                        indexList = index
+                        dialogDeleteOne.open()
+                    }
                 }
             }
         }

@@ -6,12 +6,17 @@ import QtQuick.Layouts 1.15
 Page {
     header: ToolBar {
         RowLayout {
+            id: rowLayoutToolBar
             anchors.fill: parent
+            Material.foreground: "white"
 
             ToolButton {
                 id: toolButtonBack
                 icon.source: "qrc:/assets/backArrow.png"
-                onClicked: stack.pop()
+                onClicked: {
+                    stack.pop(null)
+                    stack.replace("qrc:/Window/Home.qml", StackView.PopTransition)
+                }
             }
 
             Label {
@@ -79,7 +84,11 @@ Page {
                     id: switchThemes
                     anchors.right: parent.right
                     height: parent.height
-                    onCheckedChanged: isDark = checked
+                    checked: isDark
+                    onCheckedChanged: {
+                        isDark = checked
+                        rowLayoutToolBar.Material.foreground = "white"
+                    }
                 }
 
                 Rectangle {

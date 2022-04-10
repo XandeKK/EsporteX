@@ -4,6 +4,40 @@ import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 
 Page {
+
+    Dialog {
+        id: dialog
+        title: "Are you sure?"
+        modal: true
+        anchors.centerIn: parent
+        font.pixelSize: fontSizeNormal
+
+        DialogButtonBox {
+            Button {
+                text: qsTr("No")
+                DialogButtonBox.buttonRole: DialogButtonBox.NoRole
+                Material.background: Material.Red
+                Material.foreground: "White"
+                font.pixelSize: fontSizeNormal
+            }
+            Button {
+                text: qsTr("Yes")
+                DialogButtonBox.buttonRole: DialogButtonBox.YesRole
+                Material.background: Material.Green
+                Material.foreground: "White"
+                font.pixelSize: fontSizeNormal
+            }
+
+            onAccepted: {
+                dialog.close()
+                stack.pop(null)
+                stack.push("qrc:/Window/InfoGame.qml")
+            }
+
+            onRejected: dialog.close()
+        }
+    }
+
     header: ToolBar {
         RowLayout {
             anchors.fill: parent
@@ -220,5 +254,6 @@ Page {
         highlighted: true
         font.bold: true
         font.pixelSize: fontSizeNormal
+        onClicked: dialog.open()
     }
 }

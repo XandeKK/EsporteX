@@ -101,9 +101,7 @@ Drawer {
                     stack.push("qrc:/Window/Settings.qml")
                     break
                 case "Logout":
-                    close()
-                    stack.pop(null)
-                    stack.push("qrc:/Window/Login.qml")
+                    dialog.open()
                     break
                 }
             }

@@ -11,7 +11,7 @@ Page {
         cellHeight: cellWidth
 
         header: Item {
-            height: grid.height * 5 / 100
+            height: grid.height * 10 / 100
         }
 
         footer: Item {

@@ -14,9 +14,9 @@ ApplicationWindow {
     property int materialAccentColor: 0
 
     readonly property real dip: Qt.platform.os === "android" ? Screen.pixelDensity / (160 / 25.4) : Screen.pixelDensity / (96 / 25.4)
-    readonly property real fontSizeSmall: 11 * dip
-    readonly property real fontSizeNormal: 12 * dip
-    readonly property real fontSizeLarge: 13 * dip
+    readonly property real fontSizeSmall: 12 * dip
+    readonly property real fontSizeNormal: 13 * dip
+    readonly property real fontSizeLarge: 14 * dip
     readonly property real fontSizeToolBar: 16 * dip
 
     Material.theme: isDark ? Material.Dark : Material.Light

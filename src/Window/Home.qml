@@ -6,9 +6,44 @@ import "../Control"
 import "./SwipeHome"
 
 Page {
+    Dialog {
+        id: dialog
+        title: "Are you sure?"
+        modal: true
+        anchors.centerIn: parent
+        font.pixelSize: fontSizeNormal
+
+        DialogButtonBox {
+            Button {
+                text: qsTr("No")
+                DialogButtonBox.buttonRole: DialogButtonBox.NoRole
+                Material.background: Material.Red
+                Material.foreground: "White"
+                font.pixelSize: fontSizeNormal
+            }
+            Button {
+                text: qsTr("Yes")
+                DialogButtonBox.buttonRole: DialogButtonBox.YesRole
+                Material.background: Material.Green
+                Material.foreground: "White"
+                font.pixelSize: fontSizeNormal
+            }
+
+            onAccepted: {
+                drawer.close()
+                dialog.close()
+                stack.pop(null)
+                stack.push("qrc:/Window/Login.qml")
+            }
+
+            onRejected: dialog.close()
+        }
+    }
+
     header: ToolBar {
         RowLayout {
             anchors.fill: parent
+            Material.foreground: Material.White
 
             ToolButton {
                 id: toolButtonDrawer
@@ -20,11 +55,14 @@ Page {
                 text: {
                     switch (swipe.currentIndex){
                     case 0:
-                        return "Sport"
+                        "Sport"
+                        break
                     case 1:
-                        return "Profile"
+                        "Profile"
+                        break
                     case 2:
-                        return "Chat"
+                        "Chat"
+                        break
                     }
                 }
 

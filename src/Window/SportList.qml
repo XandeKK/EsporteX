@@ -32,6 +32,7 @@ Page {
                     id: contextMenu
                     x: -(width * 80 / 100)
                     y: 10
+                    font.pixelSize: fontSizeNormal
                     MenuItem { icon.source: "qrc:/assets/settings.png"; text: "Settings" }
                 }
             }
@@ -39,9 +40,9 @@ Page {
     }
 
     ListView {
-        id: listViewNotification
+        id: listViewSportList
         anchors.fill: parent
-        spacing: 20
+        spacing: 10
 
         model: 10
 
@@ -55,7 +56,7 @@ Page {
 
         delegate: Pane {
             Material.elevation: 6
-            width: listViewNotification.width * 90 / 100
+            width: listViewSportList.width * 90 / 100
             anchors.horizontalCenter: parent.horizontalCenter
 
             ItemDelegate {
