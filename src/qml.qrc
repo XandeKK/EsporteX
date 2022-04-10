@@ -24,7 +24,7 @@
         <file>assets/google.png</file>
         <file>assets/twitter.png</file>
         <file>Window/PreferredSport.qml</file>
-        <file>Window/SportList.qml</file>
+        <file>Window/SwipeSport/SportList.qml</file>
         <file>assets/mark.png</file>
         <file>assets/calendar.png</file>
         <file>assets/time.svg</file>
@@ -36,5 +36,10 @@
         <file>assets/markDark.png</file>
         <file>assets/profileDark.png</file>
         <file>assets/timeDark.png</file>
+        <file>Window/SwipeSport.qml</file>
+        <file>Window/SwipeSport/SportCreateByYou.qml</file>
+        <file>Window/InsertLocale.qml</file>
+        <file>Window/js/CreateGame.js</file>
+        <file>Window/InfoProfile.qml</file>
     </qresource>
 </RCC>

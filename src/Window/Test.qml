@@ -4,7 +4,20 @@ import QtQuick.Layouts 1.15
 import QtQuick.Controls.Material 2.15
 
 Page {
+    Action {
+        id: copyAction
+        text: qsTr("&Copy")
+        icon.name: "edit-copy"
+        onTriggered: console.log("SDAS")
+    }
 
+
+    AbstractButton {
+        height: 100
+        width: 100
+        down: true
+        action: copyAction
+    }
 }
 
 /*##^##

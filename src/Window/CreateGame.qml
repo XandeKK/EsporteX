@@ -2,9 +2,9 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
+import "./js/CreateGame.js" as FuncCreateGame
 
 Page {
-
     Dialog {
         id: dialog
         title: "Are you sure?"
@@ -113,9 +113,14 @@ Page {
                 }
 
                 TextField {
+                    id: fieldState
                     width: parent.width * 82 / 100
                     placeholderText: "State"
                     font.pixelSize: fontSizeNormal
+                    Keys.onReturnPressed: {
+                        fieldState.focus = false
+                        fieldCity.focus = true
+                    }
                 }
 
             }
@@ -132,9 +137,14 @@ Page {
                 }
 
                 TextField {
+                    id: fieldCity
                     width: parent.width * 82 / 100
                     placeholderText: "City"
                     font.pixelSize: fontSizeNormal
+                    Keys.onReturnPressed: {
+                        fieldCity.focus = false
+                        fieldAddress.focus = true
+                    }
                 }
 
             }
@@ -151,9 +161,14 @@ Page {
                 }
 
                 TextField {
+                    id: fieldAddress
                     width: parent.width * 82 / 100
                     placeholderText: "Address"
                     font.pixelSize: fontSizeNormal
+                    Keys.onReturnPressed: {
+                        fieldAddress.focus = false
+                        fieldStart.focus = true
+                    }
                 }
 
             }
@@ -170,10 +185,22 @@ Page {
                 }
 
                 TextField {
-                    id: teste
+                    id: fieldStart
                     width: parent.width * 45 / 100
                     placeholderText: "Start Game Ex.: 10:00"
                     font.pixelSize: fontSizeNormal
+                    Keys.onReturnPressed: {
+                        fieldStart.focus = false
+                        fieldEnd.focus = true
+                    }
+                    inputMethodHints: Qt.ImhDigitsOnly
+
+                    onFocusChanged: {
+                        inputMask = "00:00"
+                        cursorPosition = 0
+                    }
+
+                    onEditingFinished: console.log(FuncCreateGame.isValidTime(text))
                 }
 
             }
@@ -190,9 +217,22 @@ Page {
                 }
 
                 TextField {
+                    id: fieldEnd
                     width: parent.width * 45 / 100
                     placeholderText: "End Game Ex.: 13:00"
                     font.pixelSize: fontSizeNormal
+                    Keys.onReturnPressed: {
+                        fieldEnd.focus = false
+                        fieldDate.focus = true
+                    }
+                    inputMethodHints: Qt.ImhDigitsOnly
+
+                    onFocusChanged: {
+                        inputMask = "00:00"
+                        cursorPosition = 0
+                    }
+
+                    onEditingFinished: console.log(FuncCreateGame.isValidTime(text))
                 }
 
             }
@@ -209,9 +249,23 @@ Page {
                 }
 
                 TextField {
+                    id: fieldDate
                     width: parent.width * 45 / 100
                     placeholderText: "Date Ex.: 10/10/2010"
                     font.pixelSize: fontSizeNormal
+                    Keys.onReturnPressed: {
+                        fieldDate.focus = false
+                        fieldDescription.focus = true
+                    }
+
+                    inputMethodHints: Qt.ImhDigitsOnly
+
+                    onEditingFinished: console.log(FuncCreateGame.isValidDate(text))
+
+                    onFocusChanged: {
+                        inputMask = "00/00/0000"
+                        cursorPosition = 0
+                    }
                 }
             }
             Column {
@@ -226,14 +280,18 @@ Page {
                 }
 
                 TextArea {
+                    id: fieldDescription
                     width: parent.width
                     clip: true
                     wrapMode: "WordWrap"
                     placeholderText: "Put here description of game"
                     font.pixelSize: fontSizeNormal
+                    Keys.onReturnPressed: {
+                        fieldDescription.focus = false
+                    }
                     onFocusChanged: {
                         if(focus){
-                            console.log(flickable.contentY = columnRoot.height * 50 / 100)
+                            flickable.contentY = columnRoot.height * 50 / 100
                         }
                     }
                 }

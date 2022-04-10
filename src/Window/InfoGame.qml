@@ -115,6 +115,10 @@ Page {
                             text: "Alexandre"
                             font.pixelSize: fontSizeNormal
                         }
+                        ItemDelegate {
+                            anchors.fill: parent
+                            onClicked: stack.push("qrc:/Window/InfoProfile.qml")
+                        }
                     }
                 }
             }
@@ -149,6 +153,10 @@ Page {
                             anchors.leftMargin: parent.width * 2.5 / 100
                             text: "Rua Pedro Antônio de Souza, Lagarto, Sergipe"
                             font.pixelSize: fontSizeNormal
+                        }
+                        ItemDelegate {
+                            anchors.fill: parent
+                            onClicked: console.log("OOOS")
                         }
                     }
                 }

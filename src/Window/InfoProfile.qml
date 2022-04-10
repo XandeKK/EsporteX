@@ -1,8 +1,30 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
+import QtQuick.Layouts 1.15
 
 Page {
+
+    header: ToolBar {
+        RowLayout {
+            anchors.fill: parent
+
+            ToolButton {
+                id: toolButtonBack
+                icon.source: "qrc:/assets/backArrow.png"
+                onClicked: stack.pop()
+            }
+
+            Item {
+                Layout.fillWidth: true
+            }
+
+            ToolButton {
+            }
+        }
+    }
+
+
     Item {
         id: itemHeader
         height: parent.height * 35 / 100
@@ -55,6 +77,7 @@ Page {
         interactive: false
 
         model: ListModel{
+            ListElement {text: "Add friend"}
             ListElement {text: "Profile stats"}
             ListElement {text: "Profile settings"}
         }

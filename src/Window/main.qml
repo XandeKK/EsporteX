@@ -26,6 +26,7 @@ ApplicationWindow {
         id: stack
         anchors.fill: parent
         initialItem: "qrc:/Window/Home.qml"
+
         pushEnter: Transition {
             PropertyAnimation {
                 property: "opacity"

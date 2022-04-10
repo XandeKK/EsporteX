@@ -35,7 +35,7 @@ Page {
                 listModel.remove(indexList)
             }
 
-            onRejected: dialog.close()
+            onRejected: dialogDeleteOne.close()
         }
     }
 
@@ -67,7 +67,7 @@ Page {
                 listModel.clear()
             }
 
-            onRejected: dialog.close()
+            onRejected: dialogDeleteAll.close()
         }
     }
 

@@ -4,41 +4,6 @@ import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 
 Page {
-    header: ToolBar {
-        RowLayout {
-            anchors.fill: parent
-
-            ToolButton {
-                id: toolButtonBack
-                icon.source: "qrc:/assets/backArrow.png"
-                onClicked: stack.pop()
-            }
-
-            Label {
-                text: "Sport List"
-                elide: Label.ElideRight
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
-                Layout.fillWidth: true
-                font.bold: true
-                font.pixelSize: fontSizeToolBar
-            }
-
-            ToolButton {
-                id: toolButtonKebabMenu
-                icon.source: "qrc:/assets/threeDotsBlack.png"
-                onClicked: contextMenu.open()
-                Menu {
-                    id: contextMenu
-                    x: -(width * 80 / 100)
-                    y: 10
-                    font.pixelSize: fontSizeNormal
-                    MenuItem { icon.source: "qrc:/assets/settings.png"; text: "Settings" }
-                }
-            }
-        }
-    }
-
     ListView {
         id: listViewSportList
         anchors.fill: parent
@@ -178,23 +143,5 @@ Page {
                 }
             }
         }
-    }
-
-    RoundButton {
-        id: button
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: anchors.rightMargin
-        anchors.right: parent.right
-        anchors.rightMargin: parent.width * 5 / 100
-        width: 70
-        height: 70
-        font.pixelSize: fontSizeNormal
-
-        highlighted: true
-
-        icon.source: "qrc:/assets/add.png"
-        icon.color: "white"
-
-        onClicked: stack.push("qrc:/Window/CreateGame.qml")
     }
 }

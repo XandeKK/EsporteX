@@ -34,7 +34,7 @@ Page {
             ItemDelegate {
                 z: 1
                 anchors.fill: parent
-                onClicked: stack.push("qrc:/Window/SportList.qml")
+                onClicked: stack.push("qrc:/Window/SwipeSport.qml")
             }
             Pane {
                 anchors.fill: parent
@@ -68,7 +68,7 @@ Page {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: anchors.rightMargin
         anchors.right: parent.right
-        anchors.rightMargin: parent.width * 5 / 100
+        anchors.rightMargin: parent.width * 2.5 / 100
         width: 70
         height: 70
 
