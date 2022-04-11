@@ -44,7 +44,9 @@ Page {
         anchors.bottomMargin: parent.height * 5 / 100
         anchors.horizontalCenter: parent.horizontalCenter
         text: "Enter as a guest"
+        font.bold: true
         font.pixelSize: fontSizeNormal
+        Material.foreground: mouseAreaGuest.pressed ? Material.DeepPurple : "black"
 
         MouseArea {
             id: mouseAreaGuest

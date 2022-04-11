@@ -9,13 +9,17 @@ Drawer {
 
     Item {
         id: headerDrawer
-        width: root.width
-        height: root.height * 25 / 100
+        width: parent.width
+        height: parent.height * 25 / 100
 
-        Label {
-            text: "Content goes here!"
-            anchors.centerIn: parent
-            font.pixelSize: fontSizeNormal
+        Image {
+            id: logo
+            source: "qrc:/assets/Logo.png"
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            width: parent.width * 90 / 100
+            height: parent.height * 50 / 100
+            fillMode: Image.PreserveAspectFit
         }
     }
 
@@ -84,7 +88,6 @@ Drawer {
 
         model: ListModel {
             ListElement {icon: "qrc:/assets/settings.png"; name: "Settings"}
-            ListElement {icon: "qrc:/assets/about.png"; name: "About"}
             ListElement {icon: "qrc:/assets/logout.png"; name: "Logout"}
         }
 

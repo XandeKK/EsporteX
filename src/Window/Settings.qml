@@ -5,10 +5,10 @@ import QtQuick.Layouts 1.15
 
 Page {
     header: ToolBar {
+        Material.foreground: "white"
         RowLayout {
             id: rowLayoutToolBar
             anchors.fill: parent
-            Material.foreground: "white"
 
             ToolButton {
                 id: toolButtonBack
@@ -89,61 +89,6 @@ Page {
                         isDark = checked
                         rowLayoutToolBar.Material.foreground = "white"
                     }
-                }
-
-                Rectangle {
-                    width: parent.width
-                    height: 1
-                    color: "#44000000"
-                    anchors.bottom: parent.bottom
-                }
-            }
-
-            Rectangle {
-                width: parent.width
-                height: 60
-                color: "#11000000"
-
-                Label {
-                    text: qsTr("Material Accent")
-                    anchors.left: parent.left
-                    anchors.leftMargin: parent.width * 8 / 100
-                    anchors.right: combomBoxMaterialAccent.left
-                    height: parent.height
-                    verticalAlignment: "AlignVCenter"
-                    font.pixelSize: fontSizeNormal
-                }
-
-                ComboBox {
-                    id: combomBoxMaterialAccent
-                    anchors.right: parent.right
-                    anchors.rightMargin: parent.width * 2.5 / 100
-                    height: parent.height * 80 / 100
-                    anchors.verticalCenter: parent.verticalCenter
-                    model: [
-                        "Red",
-                        "Pink",
-                        "Purple",
-                        "DeepPurple",
-                        "Indigo",
-                        "Blue",
-                        "LightBlue",
-                        "Cyan",
-                        "Teal",
-                        "Green",
-                        "LightGreen",
-                        "Lime",
-                        "Yellow",
-                        "Amber",
-                        "Orange",
-                        "DeepOrange",
-                        "Brown",
-                        "Grey",
-                        "BlueGrey"
-                    ]
-                    currentIndex: materialAccentColor
-                    onCurrentIndexChanged: materialAccentColor = currentIndex
-                    font.pixelSize: fontSizeNormal
                 }
 
                 Rectangle {

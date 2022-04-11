@@ -41,6 +41,7 @@ Page {
     }
 
     header: ToolBar {
+        Material.foreground: "white"
         RowLayout {
             anchors.fill: parent
             Material.foreground: Material.White

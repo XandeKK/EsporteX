@@ -39,6 +39,7 @@ Page {
     }
 
     header: ToolBar {
+        Material.foreground: "white"
         RowLayout {
             anchors.fill: parent
 
@@ -308,6 +309,7 @@ Page {
         width: parent.width * 20 / 100
 
         text: "Ok"
+        Material.foreground: "black"
         Material.elevation: 1
         highlighted: true
         font.bold: true

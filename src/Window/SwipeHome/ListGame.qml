@@ -75,7 +75,8 @@ Page {
         highlighted: true
 
         icon.source: "qrc:/assets/add.png"
-        icon.color: "white"
+        icon.color: "black"
+        Material.elevation: 1
 
         onClicked: stack.push("qrc:/Window/CreateGame.qml")
     }

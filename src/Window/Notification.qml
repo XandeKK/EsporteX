@@ -7,6 +7,31 @@ Page {
     id: notification
     property int indexList
 
+    Popup {
+        id: popup
+        anchors.centerIn: parent
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+        Material.foreground: "black"
+
+        RowLayout {
+            id: rowLayout
+            Label {
+                text: qsTr("Get notification?")
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: switchNotification.checked = !switchNotification.checked
+                }
+            }
+
+            Switch {
+                id: switchNotification
+                checked: false
+            }
+        }
+    }
+
     Dialog {
         id: dialogDeleteOne
         title: "Are you sure?"
@@ -72,6 +97,7 @@ Page {
     }
 
     header: ToolBar {
+        Material.foreground: "white"
         RowLayout {
             anchors.fill: parent
 
@@ -110,6 +136,7 @@ Page {
                         icon.source: "qrc:/assets/settings.png"
                         text: "Settings"
                         font.pixelSize: fontSizeNormal
+                        onClicked: popup.open()
                     }
                 }
             }

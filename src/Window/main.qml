@@ -11,7 +11,6 @@ ApplicationWindow {
     id: root
 
     property bool isDark: false
-    property int materialAccentColor: 0
 
     readonly property real dip: Qt.platform.os === "android" ? Screen.pixelDensity / (160 / 25.4) : Screen.pixelDensity / (96 / 25.4)
     readonly property real fontSizeSmall: 12 * dip
@@ -20,12 +19,11 @@ ApplicationWindow {
     readonly property real fontSizeToolBar: 16 * dip
 
     Material.theme: isDark ? Material.Dark : Material.Light
-    Material.accent: materialAccentColor
 
     StackView {
         id: stack
         anchors.fill: parent
-        initialItem: "qrc:/Window/Home.qml"
+        initialItem: "qrc:/Window/Login.qml"
 
         pushEnter: Transition {
             PropertyAnimation {

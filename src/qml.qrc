@@ -41,5 +41,9 @@
         <file>Window/InsertLocale.qml</file>
         <file>Window/js/CreateGame.js</file>
         <file>Window/InfoProfile.qml</file>
+        <file>assets/edit.png</file>
+        <file>assets/Logo.png</file>
+        <file>assets/Marca.png</file>
+        <file>qtquickcontrols2.conf</file>
     </qresource>
 </RCC>

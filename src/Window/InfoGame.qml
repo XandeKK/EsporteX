@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.15
 
 Page {
     header: ToolBar {
+        Material.foreground: "white"
         RowLayout {
             anchors.fill: parent
 
@@ -24,9 +25,18 @@ Page {
                 font.pixelSize: fontSizeToolBar
             }
 
-            ToolButton {
+            ToolButton {                
                 id: toolButtonKebabMenu
                 icon.source: "qrc:/assets/threeDotsBlack.png"
+                onClicked: contextMenu.open()
+                Menu {
+                    id: contextMenu
+                    x: -(width * 80 / 100)
+                    y: 10
+                    font.pixelSize: fontSizeNormal
+                    MenuItem { icon.source: "qrc:/assets/settings.png"; text: "Edit" }
+                    MenuItem { icon.source: "qrc:/assets/edit.png"; text: "Remove" }
+                }
             }
         }
     }
@@ -280,6 +290,7 @@ Page {
         width: parent.width * 25 / 100
 
         text: "Participar"
+        Material.foreground: "black"
         Material.elevation: 1
         highlighted: true
         font.bold: true

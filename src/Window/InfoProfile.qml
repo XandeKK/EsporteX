@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.15
 Page {
 
     header: ToolBar {
+        Material.foreground: "white"
         RowLayout {
             anchors.fill: parent
 

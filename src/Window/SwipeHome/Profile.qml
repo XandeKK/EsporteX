@@ -55,7 +55,7 @@ Page {
         interactive: false
 
         model: ListModel{
-            ListElement {text: "Profile stats"}
+            ListElement {text: "Profile statistics"}
             ListElement {text: "Profile settings"}
         }
 

@@ -108,6 +108,7 @@ Page {
         width: parent.width * 25 / 100
 
         text: "Agree"
+        Material.foreground: "black"
         highlighted: true
 
         onClicked: stack.replace("qrc:/Window/Home.qml")
