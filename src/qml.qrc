@@ -45,5 +45,8 @@
         <file>assets/Logo.png</file>
         <file>assets/Marca.png</file>
         <file>qtquickcontrols2.conf</file>
+        <file>assets/FrameSocial.png</file>
+        <file>assets/Login.png</file>
+        <file>assets/paper.png</file>
     </qresource>
 </RCC>
