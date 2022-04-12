@@ -15,7 +15,7 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             height: parent.height * 50 / 100
             width: height
-            source: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+            source: "http://10.0.0.22/assets/profile.jpg"
             fillMode: Image.PreserveAspectCrop
         }
 
