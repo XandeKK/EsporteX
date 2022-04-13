@@ -1,30 +1,15 @@
-import QtQuick 2.15
-import QtQuick.Controls 6.2
-import QtQuick.Layouts 1.15
-import QtQuick.Controls.Material 2.15
+import QtQuick 2.0
+import QtCharts 2.0
 
-Page {
-    Action {
-        id: copyAction
-        text: qsTr("&Copy")
-        icon.name: "edit-copy"
-        onTriggered: console.log("SDAS")
-    }
+ChartView {
+    width: 400
+    height: 300
+    theme: ChartView.ChartThemeBrownSand
+    antialiasing: true
 
-
-    AbstractButton {
-        height: 100
-        width: 100
-        down: true
-        action: copyAction
+    PieSeries {
+        id: pieSeries
+        PieSlice { label: "eaten"; value: 94.9 }
+        PieSlice { label: "not yet eaten"; value: 5.1 }
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}D{i:5}D{i:4}D{i:1}D{i:9}D{i:11}D{i:13}D{i:15}
-D{i:17}D{i:8}D{i:23}D{i:21}D{i:26}D{i:24}D{i:29}D{i:27}D{i:32}D{i:30}D{i:35}D{i:33}
-D{i:19}
-}
-##^##*/
-
