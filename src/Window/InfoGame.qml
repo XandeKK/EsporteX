@@ -260,7 +260,7 @@ Page {
 
                         font.bold: true
                         font.pixelSize: fontSizeNormal
-                        text: "Address"
+                        text: "Description"
 
                         Separator {}
                     }
@@ -293,7 +293,7 @@ Page {
         anchors.bottomMargin: parent.width * 2.5 / 100
         width: parent.width * 25 / 100
 
-        text: "Participar"
+        text: "Participate"
         Material.foreground: "black"
         Material.elevation: 1
         highlighted: true
