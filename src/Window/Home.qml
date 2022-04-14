@@ -8,25 +8,28 @@ import "./SwipeHome"
 Page {
     Dialog {
         id: dialog
-        title: "Are you sure?"
-        modal: true
         anchors.centerIn: parent
+        modal: true
+
         font.pixelSize: fontSizeNormal
+        title: "Are you sure?"
 
         DialogButtonBox {
             Button {
-                text: qsTr("No")
                 DialogButtonBox.buttonRole: DialogButtonBox.NoRole
                 Material.background: Material.Red
                 Material.foreground: "White"
+
                 font.pixelSize: fontSizeNormal
+                text: qsTr("No")
             }
             Button {
-                text: qsTr("Yes")
                 DialogButtonBox.buttonRole: DialogButtonBox.YesRole
                 Material.background: Material.Green
                 Material.foreground: "White"
+
                 font.pixelSize: fontSizeNormal
+                text: qsTr("Yes")
             }
 
             onAccepted: {
@@ -64,10 +67,11 @@ Page {
                     }
                 }
 
-                elide: Label.ElideRight
+                Layout.fillWidth: true
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
-                Layout.fillWidth: true
+
+                elide: Label.ElideRight
                 font.bold: true
                 font.pixelSize: fontSizeToolBar
             }
@@ -75,6 +79,7 @@ Page {
             ToolButton {
                 id: toolButtonNotification
                 icon.source: "qrc:/assets/Bell.png"
+
                 onClicked: stack.push("qrc:/Window/Notification.qml")
             }
         }
@@ -83,6 +88,7 @@ Page {
     footer: TabBar {
         id: tabBar
         currentIndex: swipe.currentIndex
+
         TabButton {
             icon.source: "qrc:/assets/home.png"
         }
@@ -92,13 +98,16 @@ Page {
         }
     }
 
-    DrawerNavigation {id: drawer}
+    DrawerNavigation {
+        id: drawer
+    }
 
     SwipeView {
         id: swipe
-        currentIndex: tabBar.currentIndex
         anchors.fill: parent
+
         interactive: false
+        currentIndex: tabBar.currentIndex
 
         Loader {
             sourceComponent: ListGame {}

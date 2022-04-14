@@ -10,13 +10,13 @@ Page {
 
     Image {
         id: paper
-        source: "qrc:/assets/paper.png"
         anchors.fill: parent
+
+        source: "qrc:/assets/paper.png"
     }
 
     Image {
         id: frameSocial
-        source: "qrc:/assets/FrameSocial.png"
         anchors.centerIn: parent
         width: {
             if(parent.width > (root.height * 80 / 100)){
@@ -25,8 +25,9 @@ Page {
                 parent.width
             }
         }
-
         height: width
+
+        source: "qrc:/assets/FrameSocial.png"
         mipmap: true
 
         Label {
@@ -35,23 +36,25 @@ Page {
             anchors.topMargin: parent.height * 14 / 100
             anchors.left: parent.left
             anchors.leftMargin: parent.width * 35 / 100
-            text: "Enter with:"
+            rotation: -5
+
+            Material.foreground: "black"
             font.bold: true
             font.pixelSize: fontSizeLarge
-            Material.foreground: "black"
-            rotation: -5
+            text: "Enter with:"
         }
 
 
         ListView {
             id: listViewOAuth
+            width: parent.width * 65 / 100
+            height: parent.height * 51.8 / 100
             anchors.top: parent.top
             anchors.topMargin: parent.height * 18 / 100
             anchors.left: parent.left
             anchors.leftMargin: parent.height * 16 / 100
-            width: parent.width * 65 / 100
-            height: parent.height * 51.8 / 100
             rotation: -6.2
+
             interactive: false
             clip: true
 
@@ -63,12 +66,14 @@ Page {
 
             delegate: ItemDelegate {
                 width: listViewOAuth.width
-                icon.source: model.icon
-                icon.color: "transparent"
+
                 icon.width: (listViewOAuth.height - listViewOAuth.anchors.topMargin) / listViewOAuth.count
                 icon.height: (listViewOAuth.height - listViewOAuth.anchors.topMargin) / listViewOAuth.count
-                text: model.name
+                icon.source: model.icon
+                icon.color: "transparent"
+
                 font.pixelSize: fontSizeNormal
+                text: model.name
             }
         }
 
@@ -77,11 +82,12 @@ Page {
             anchors.bottomMargin: parent.height * 1 / 100
             anchors.left: parent.left
             anchors.leftMargin: parent.width * 49 / 100
-            text: "Or"
-            font.bold: true
-            font.pixelSize: fontSizeLarge
-            Material.foreground: "black"
             rotation: -5
+
+            Material.foreground: "black"
+            font.pixelSize: fontSizeLarge
+            font.bold: true
+            text: "Or"
         }
 
         Label {
@@ -90,11 +96,12 @@ Page {
             anchors.bottomMargin: parent.height * 18 / 100
             anchors.left: parent.left
             anchors.leftMargin: parent.width * 40 / 100
-            text: "Enter as a guest"
+            rotation: -5
+
+            Material.foreground: mouseAreaGuest.pressed ? Material.DeepPurple : "black"
             font.bold: true
             font.pixelSize: fontSizeLarge
-            Material.foreground: mouseAreaGuest.pressed ? Material.DeepPurple : "black"
-            rotation: -5
+            text: "Enter as a guest"
 
             MouseArea {
                 id: mouseAreaGuest
@@ -107,12 +114,12 @@ Page {
 
     Image {
         id: loginImage
-        source: "qrc:/assets/Login.png"
-        anchors.horizontalCenter: parent.horizontalCenter
         width: parent.height * 25 / 100
         height: parent.height * 8 / 100
         anchors.top: parent.top
         anchors.topMargin: parent.height * 5 / 100
-        //        mipmap: true
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        source: "qrc:/assets/Login.png"
     }
 }

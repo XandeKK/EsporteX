@@ -3,32 +3,11 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 import QtCharts 2.3
+import "../../../Control/"
 
 Page {
-    header: ToolBar {
-        Material.foreground: "white"
-        RowLayout {
-            anchors.fill: parent
-
-            ToolButton {
-                id: toolButtonBack
-                icon.source: "qrc:/assets/backArrow.png"
-                onClicked: stack.pop()
-            }
-
-            Label {
-                text: "List Participation"
-                elide: Label.ElideRight
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
-                Layout.fillWidth: true
-                font.bold: true
-                font.pixelSize: fontSizeToolBar
-            }
-
-            ToolButton {
-            }
-        }
+    header: ToolBarBack {
+        labelToolBar: "List Participation"
     }
 
     ListView {
@@ -47,9 +26,9 @@ Page {
         }
 
         delegate: Pane {
-            Material.elevation: 6
             width: listViewParticipation.width * 90 / 100
             anchors.horizontalCenter: parent.horizontalCenter
+            Material.elevation: 6
 
             ItemDelegate {
                 anchors.fill: parent
@@ -57,9 +36,9 @@ Page {
 
                 Column {
                     id: columnLeft
-                    anchors.left: parent.left
                     width: parent.width * 60 / 100
                     height: parent.height
+                    anchors.left: parent.left
                     spacing: 10
 
                     Row {
@@ -69,19 +48,21 @@ Page {
 
                         Image {
                             id: imageProfile
-                            source: Material.theme == Material.Dark ? "qrc:/assets/profileDark.png" : "qrc:/assets/profile.png"
                             width: height
                             height: parent.height
+
                             antialiasing: true
                             mipmap: true
+                            source: Material.theme == Material.Dark ? "qrc:/assets/profileDark.png" : "qrc:/assets/profile.png"
                         }
                         Label {
                             id: nameProfile
                             width: parent.width - imageProfile.width
                             height: parent.height
-                            text: qsTr("Alexandre")
                             verticalAlignment: Text.AlignVCenter
+
                             font.pixelSize: fontSizeNormal
+                            text: qsTr("Alexandre")
                         }
                     }
 
@@ -92,22 +73,24 @@ Page {
 
                         Image {
                             id: imageMap
-                            source: Material.theme == Material.Dark ? "qrc:/assets/markDark.png" : "qrc:/assets/mark.png"
                             width: height
                             height: parent.height
+
                             antialiasing: true
                             mipmap: true
+                            source: Material.theme == Material.Dark ? "qrc:/assets/markDark.png" : "qrc:/assets/mark.png"
                         }
 
                         Label {
                             id: nameMap
-                            text: qsTr("Rua Pedro Antônio dos Santos Rua Pedro Antônio dos Santos Rua Pedro Antônio dos Santos")
                             width: parent.width - imageProfile.width
                             height: parent.height
                             verticalAlignment: Text.AlignVCenter
+
                             clip: true
                             elide: Text.ElideRight
                             font.pixelSize: fontSizeNormal
+                            text: qsTr("Rua Pedro Antônio dos Santos Rua Pedro Antônio dos Santos Rua Pedro Antônio dos Santos")
                         }
                     }
                 }
@@ -125,21 +108,23 @@ Page {
 
                         Image {
                             id: imageCalendar
-                            source: Material.theme == Material.Dark ? "qrc:/assets/calendarDark.png" : "qrc:/assets/calendar.png"
                             width: height
                             height: parent.height
+
                             antialiasing: true
                             mipmap: true
+                            source: Material.theme == Material.Dark ? "qrc:/assets/calendarDark.png" : "qrc:/assets/calendar.png"
                         }
 
                         Label {
                             id: nameCalendar
-                            text: qsTr("10/04/2022")
                             width: parent.width - imageProfile.width
                             height: parent.height
                             verticalAlignment: Text.AlignVCenter
+
                             clip: true
                             font.pixelSize: fontSizeNormal
+                            text: qsTr("10/04/2022")
                         }
                     }
 
@@ -150,21 +135,23 @@ Page {
 
                         Image {
                             id: imageTime
-                            source: Material.theme == Material.Dark ? "qrc:/assets/timeDark.png" : "qrc:/assets/time.svg"
                             width: height
                             height: parent.height
+
                             antialiasing: true
                             mipmap: true
+                            source: Material.theme == Material.Dark ? "qrc:/assets/timeDark.png" : "qrc:/assets/time.svg"
                         }
 
                         Label {
                             id: nameTime
-                            text: qsTr("10:00 - 12:00")
                             width: parent.width - imageProfile.width
                             height: parent.height
                             verticalAlignment: Text.AlignVCenter
+
                             clip: true
                             font.pixelSize: fontSizeNormal
+                            text: qsTr("10:00 - 12:00")
                         }
                     }
                 }

@@ -2,29 +2,31 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
+import "../../../Control/"
 
 Page {
     Dialog {
         id: dialog
-        title: "Are you sure?"
-        modal: true
         anchors.centerIn: parent
+        modal: true
+
         font.pixelSize: fontSizeNormal
+        title: "Are you sure?"
 
         DialogButtonBox {
             Button {
-                text: qsTr("No")
                 DialogButtonBox.buttonRole: DialogButtonBox.NoRole
                 Material.background: Material.Red
                 Material.foreground: "White"
                 font.pixelSize: fontSizeNormal
+                text: qsTr("No")
             }
             Button {
-                text: qsTr("Yes")
                 DialogButtonBox.buttonRole: DialogButtonBox.YesRole
                 Material.background: Material.Green
                 Material.foreground: "White"
                 font.pixelSize: fontSizeNormal
+                text: qsTr("Yes")
             }
 
             onAccepted: {
@@ -35,30 +37,8 @@ Page {
         }
     }
 
-    header: ToolBar {
-        Material.foreground: "white"
-        RowLayout {
-            anchors.fill: parent
-
-            ToolButton {
-                id: toolButtonBack
-                icon.source: "qrc:/assets/backArrow.png"
-                onClicked: stack.pop()
-            }
-
-            Label {
-                text: "Settings Info"
-                elide: Label.ElideRight
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
-                Layout.fillWidth: true
-                font.bold: true
-                font.pixelSize: fontSizeToolBar
-            }
-
-            ToolButton {
-            }
-        }
+    header: ToolBarBack {
+        labelToolBar: "Settings Info"
     }
 
     Item {
@@ -86,64 +66,73 @@ Page {
                 Label {
                     width: parent.width * 15 / 100
                     height: parent.height
-                    text: "Name:"
                     verticalAlignment: "AlignVCenter"
+
                     font.pixelSize: fontSizeNormal
+                    text: "Name:"
                 }
 
                 TextField {
                     id: fieldName
                     width: parent.width * 82 / 100
-                    placeholderText: "Name"
+
                     font.pixelSize: fontSizeNormal
+                    placeholderText: "Name"
+
                     Keys.onReturnPressed: {
                         fieldName.focus = false
                         fieldState.focus = true
                     }
                 }
-
             }
 
             Row {
                 width: parent.width
                 spacing: parent.width * 3 / 100
+
                 Label {
                     width: parent.width * 15 / 100
                     height: parent.height
-                    text: "State:"
                     verticalAlignment: "AlignVCenter"
+
                     font.pixelSize: fontSizeNormal
+                    text: "State:"
                 }
 
                 TextField {
                     id: fieldState
                     width: parent.width * 82 / 100
-                    placeholderText: "State"
+
                     font.pixelSize: fontSizeNormal
+                    placeholderText: "State"
+
                     Keys.onReturnPressed: {
                         fieldState.focus = false
                         fieldCity.focus = true
                     }
                 }
-
             }
 
             Row {
                 width: parent.width
                 spacing: parent.width * 3 / 100
+
                 Label {
                     width: parent.width * 15 / 100
                     height: parent.height
-                    text: "City:"
                     verticalAlignment: "AlignVCenter"
+
                     font.pixelSize: fontSizeNormal
+                    text: "City:"
                 }
 
                 TextField {
                     id: fieldCity
                     width: parent.width * 82 / 100
-                    placeholderText: "City"
+
                     font.pixelSize: fontSizeNormal
+                    placeholderText: "City"
+
                     Keys.onReturnPressed: {
                         fieldCity.focus = false
                         fieldAddress.focus = true
@@ -157,21 +146,25 @@ Page {
 
                 Label {
                     width: parent.width
-                    text: "Description:"
                     verticalAlignment: "AlignVCenter"
+
                     font.pixelSize: fontSizeNormal
+                    text: "Description:"
                 }
 
                 TextArea {
                     id: fieldDescription
                     width: parent.width
+
                     clip: true
                     wrapMode: "WordWrap"
-                    placeholderText: "Put here description of game"
                     font.pixelSize: fontSizeNormal
+                    placeholderText: "Put here description of game"
+
                     Keys.onReturnPressed: {
                         fieldDescription.focus = false
                     }
+
                     onFocusChanged: {
                         if(focus){
                             flickable.contentY = columnRoot.height * 50 / 100
@@ -184,18 +177,19 @@ Page {
 
     RoundButton {
         id: button
+        width: parent.width * 20 / 100
         anchors.right: parent.right
         anchors.rightMargin: parent.width * 2.5 / 100
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.width * 2.5 / 100
-        width: parent.width * 20 / 100
-
-        text: "Ok"
-        Material.foreground: "black"
         Material.elevation: 1
+
+        Material.foreground: "black"
         highlighted: true
         font.bold: true
         font.pixelSize: fontSizeNormal
+        text: "Ok"
+
         onClicked: dialog.open()
     }
 }

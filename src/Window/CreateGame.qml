@@ -3,29 +3,33 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 import "./js/CreateGame.js" as FuncCreateGame
+import "../Control/"
 
 Page {
     Dialog {
         id: dialog
-        title: "Are you sure?"
-        modal: true
         anchors.centerIn: parent
+        modal: true
+
         font.pixelSize: fontSizeNormal
+        title: "Are you sure?"
 
         DialogButtonBox {
             Button {
-                text: qsTr("No")
                 DialogButtonBox.buttonRole: DialogButtonBox.NoRole
+
                 Material.background: Material.Red
                 Material.foreground: "White"
                 font.pixelSize: fontSizeNormal
+                text: qsTr("No")
             }
             Button {
-                text: qsTr("Yes")
                 DialogButtonBox.buttonRole: DialogButtonBox.YesRole
+
                 Material.background: Material.Green
                 Material.foreground: "White"
                 font.pixelSize: fontSizeNormal
+                text: qsTr("Yes")
             }
 
             onAccepted: {
@@ -38,30 +42,8 @@ Page {
         }
     }
 
-    header: ToolBar {
-        Material.foreground: "white"
-        RowLayout {
-            anchors.fill: parent
-
-            ToolButton {
-                id: toolButtonBack
-                icon.source: "qrc:/assets/backArrow.png"
-                onClicked: stack.pop()
-            }
-
-            Label {
-                text: "Create Game"
-                elide: Label.ElideRight
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
-                Layout.fillWidth: true
-                font.bold: true
-                font.pixelSize: fontSizeToolBar
-            }
-
-            ToolButton {
-            }
-        }
+    header: ToolBarBack {
+        labelToolBar: "Create Game"
     }
 
     Item {
@@ -75,7 +57,7 @@ Page {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        contentHeight: (columnRoot.height + button.height) + (columnRoot.height * 50 / 100)
+        contentHeight: (columnRoot.height + buttonConfirm.height) + (columnRoot.height * 50 / 100)
 
         Column {
             id: columnRoot
@@ -84,40 +66,49 @@ Page {
             spacing: 20
 
             Row {
+                id: rowSports
                 width: parent.width
                 spacing: parent.width * 3 / 100
+
                 Label {
                     width: parent.width * 15 / 100
                     height: parent.height
-                    text: "Sport:"
                     verticalAlignment: "AlignVCenter"
+
                     font.pixelSize: fontSizeNormal
+                    text: "Sport:"
                 }
 
                 ComboBox {
                     width: parent.width * 82 / 100
                     model: [ "VolleyBall", "Soccer", "BasketBall", "Tennis"]
+
                     font.pixelSize: fontSizeNormal
                 }
 
             }
 
             Row {
+                id: rowState
                 width: parent.width
                 spacing: parent.width * 3 / 100
+
                 Label {
                     width: parent.width * 15 / 100
                     height: parent.height
-                    text: "State:"
                     verticalAlignment: "AlignVCenter"
+
                     font.pixelSize: fontSizeNormal
+                    text: "State:"
                 }
 
                 TextField {
                     id: fieldState
                     width: parent.width * 82 / 100
-                    placeholderText: "State"
+
                     font.pixelSize: fontSizeNormal
+                    placeholderText: "State"
+
                     Keys.onReturnPressed: {
                         fieldState.focus = false
                         fieldCity.focus = true
@@ -127,21 +118,26 @@ Page {
             }
 
             Row {
+                id: rowCity
                 width: parent.width
                 spacing: parent.width * 3 / 100
+
                 Label {
                     width: parent.width * 15 / 100
                     height: parent.height
-                    text: "City:"
                     verticalAlignment: "AlignVCenter"
+
                     font.pixelSize: fontSizeNormal
+                    text: "City:"
                 }
 
                 TextField {
                     id: fieldCity
                     width: parent.width * 82 / 100
-                    placeholderText: "City"
                     font.pixelSize: fontSizeNormal
+
+                    placeholderText: "City"
+
                     Keys.onReturnPressed: {
                         fieldCity.focus = false
                         fieldAddress.focus = true
@@ -151,21 +147,26 @@ Page {
             }
 
             Row {
+                id: rowAddress
                 width: parent.width
                 spacing: parent.width * 3 / 100
+
                 Label {
                     width: parent.width * 15 / 100
                     height: parent.height
-                    text: "Address:"
                     verticalAlignment: "AlignVCenter"
+
                     font.pixelSize: fontSizeNormal
+                    text: "Address:"
                 }
 
                 TextField {
                     id: fieldAddress
                     width: parent.width * 82 / 100
-                    placeholderText: "Address"
+
                     font.pixelSize: fontSizeNormal
+                    placeholderText: "Address"
+
                     Keys.onReturnPressed: {
                         fieldAddress.focus = false
                         fieldStart.focus = true
@@ -175,93 +176,105 @@ Page {
             }
 
             Row {
+                id: rowStartTime
                 width: parent.width
                 spacing: parent.width * 3 / 100
+
                 Label {
                     width: parent.width * 15 / 100
                     height: parent.height
-                    text: "Start:"
                     verticalAlignment: "AlignVCenter"
+
                     font.pixelSize: fontSizeNormal
+                    text: "Start:"
                 }
 
                 TextField {
                     id: fieldStart
                     width: parent.width * 45 / 100
-                    placeholderText: "Start Game Ex.: 10:00"
+
                     font.pixelSize: fontSizeNormal
+                    placeholderText: "Start Game Ex.: 10:00"
+
+                    inputMethodHints: Qt.ImhDigitsOnly
+                    onEditingFinished: console.log(FuncCreateGame.isValidTime(text))
+
                     Keys.onReturnPressed: {
                         fieldStart.focus = false
                         fieldEnd.focus = true
                     }
-                    inputMethodHints: Qt.ImhDigitsOnly
 
                     onFocusChanged: {
                         inputMask = "00:00"
                         cursorPosition = 0
                     }
-
-                    onEditingFinished: console.log(FuncCreateGame.isValidTime(text))
                 }
-
             }
 
             Row {
+                id: rowEndTime
                 width: parent.width
                 spacing: parent.width * 3 / 100
+
                 Label {
                     width: parent.width * 15 / 100
                     height: parent.height
-                    text: "End:"
                     verticalAlignment: "AlignVCenter"
+
                     font.pixelSize: fontSizeNormal
+                    text: "End:"
                 }
 
                 TextField {
                     id: fieldEnd
                     width: parent.width * 45 / 100
-                    placeholderText: "End Game Ex.: 13:00"
+
                     font.pixelSize: fontSizeNormal
+                    placeholderText: "End Game Ex.: 13:00"
+
+                    inputMethodHints: Qt.ImhDigitsOnly
+                    onEditingFinished: console.log(FuncCreateGame.isValidTime(text))
+
                     Keys.onReturnPressed: {
                         fieldEnd.focus = false
                         fieldDate.focus = true
                     }
-                    inputMethodHints: Qt.ImhDigitsOnly
 
                     onFocusChanged: {
                         inputMask = "00:00"
                         cursorPosition = 0
                     }
-
-                    onEditingFinished: console.log(FuncCreateGame.isValidTime(text))
                 }
-
             }
 
             Row {
+                id: rowDate
                 width: parent.width
                 spacing: parent.width * 3 / 100
+
                 Label {
                     width: parent.width * 15 / 100
                     height: parent.height
-                    text: "Date:"
                     verticalAlignment: "AlignVCenter"
+
                     font.pixelSize: fontSizeNormal
+                    text: "Date:"
                 }
 
                 TextField {
                     id: fieldDate
                     width: parent.width * 45 / 100
-                    placeholderText: "Date Ex.: 10/10/2010"
+
                     font.pixelSize: fontSizeNormal
+                    placeholderText: "Date Ex.: 10/10/2010"
+
+                    inputMethodHints: Qt.ImhDigitsOnly
+                    onEditingFinished: console.log(FuncCreateGame.isValidDate(text))
+
                     Keys.onReturnPressed: {
                         fieldDate.focus = false
                         fieldDescription.focus = true
                     }
-
-                    inputMethodHints: Qt.ImhDigitsOnly
-
-                    onEditingFinished: console.log(FuncCreateGame.isValidDate(text))
 
                     onFocusChanged: {
                         inputMask = "00/00/0000"
@@ -269,15 +282,18 @@ Page {
                     }
                 }
             }
+
             Column {
+                id: columnDescription
                 width: parent.width
                 spacing: 5
 
                 Label {
                     width: parent.width
-                    text: "Description:"
                     verticalAlignment: "AlignVCenter"
+
                     font.pixelSize: fontSizeNormal
+                    text: "Description:"
                 }
 
                 TextArea {
@@ -285,8 +301,10 @@ Page {
                     width: parent.width
                     clip: true
                     wrapMode: "WordWrap"
-                    placeholderText: "Put here description of game"
+
                     font.pixelSize: fontSizeNormal
+                    placeholderText: "Put here description of game"
+
                     Keys.onReturnPressed: {
                         fieldDescription.focus = false
                     }
@@ -301,19 +319,20 @@ Page {
     }
 
     RoundButton {
-        id: button
+        id: buttonConfirm
+        width: parent.width * 20 / 100
         anchors.right: parent.right
         anchors.rightMargin: parent.width * 2.5 / 100
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.width * 2.5 / 100
-        width: parent.width * 20 / 100
 
-        text: "Ok"
         Material.foreground: "black"
         Material.elevation: 1
         highlighted: true
         font.bold: true
         font.pixelSize: fontSizeNormal
+        text: "Ok"
+
         onClicked: dialog.open()
     }
 }

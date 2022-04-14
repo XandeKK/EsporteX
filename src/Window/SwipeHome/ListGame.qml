@@ -7,6 +7,7 @@ Page {
         id: grid
         anchors.fill: parent
         anchors.leftMargin: parent.width * 4.5 / 100
+
         cellWidth: parent.width * 31 / 100
         cellHeight: cellWidth
 
@@ -31,9 +32,11 @@ Page {
         delegate: ItemDelegate {
             width: parent.width * 30 / 100
             height: width
+
             ItemDelegate {
-                z: 1
                 anchors.fill: parent
+                z: 1
+
                 onClicked: stack.push("qrc:/Window/SwipeSport.qml")
             }
             Pane {
@@ -42,11 +45,12 @@ Page {
 
                 Image {
                     id: sportImage
+                    width: height
+                    height: parent.height * 50 / 100
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     anchors.topMargin: parent.height * 15 / 100
-                    height: parent.height * 50 / 100
-                    width: height
+
                     source: image
                     mipmap: true
                 }
@@ -56,21 +60,22 @@ Page {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: sportImage.bottom
                     anchors.topMargin: parent.height * 10 / 100
-                    text: sport
+
                     font.bold: true
                     font.pixelSize: fontSizeNormal
+                    text: sport
                 }
             }
         }
     }
 
     RoundButton {
+        width: 70
+        height: 70
         anchors.bottom: parent.bottom
         anchors.bottomMargin: anchors.rightMargin
         anchors.right: parent.right
         anchors.rightMargin: parent.width * 2.5 / 100
-        width: 70
-        height: 70
 
         highlighted: true
 

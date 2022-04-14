@@ -1,7 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
-//import QtQuick.Layouts 1.15
 
 Drawer {
     width: 0.66 * root.width
@@ -14,21 +13,22 @@ Drawer {
 
         Image {
             id: logo
-            source: "qrc:/assets/Logo.png"
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
             width: parent.width * 90 / 100
             height: parent.height * 50 / 100
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+
             fillMode: Image.PreserveAspectFit
+            source: "qrc:/assets/Logo.png"
         }
     }
 
     ListView {
         id: listViewHeader
+        height: contentHeight
         anchors.top: headerDrawer.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        height: contentHeight
         interactive: false
 
         model: ListModel {
@@ -37,10 +37,13 @@ Drawer {
         }
 
         delegate: ItemDelegate {
-            text: name
             width: listViewHeader.width
+
             icon.source: model.icon
+
             font.pixelSize: fontSizeNormal
+            text: name
+
             highlighted: {
                 if(tabBar.currentIndex == 0 && name === "Home"){
                     return true
@@ -64,20 +67,17 @@ Drawer {
         }
     }
 
-    Rectangle {
+    Separator {
         id: separator
-        anchors.top: listViewHeader.bottom
-        width: parent.width
-        height: 1
-        color: "#c7c7c7"
+        anchors.bottom: listViewHeader.bottom
     }
 
     ListView {
         id: listViewFooter
+        height: contentHeight
         anchors.top: separator.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        height: contentHeight
         interactive: false
 
         model: ListModel {
@@ -86,10 +86,12 @@ Drawer {
         }
 
         delegate: ItemDelegate {
-            text: name
             width: listViewFooter.width
+
             icon.source: model.icon
+
             font.pixelSize: fontSizeNormal
+            text: name
 
             onClicked: {
                 switch (name){

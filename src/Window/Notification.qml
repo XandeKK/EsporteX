@@ -4,8 +4,8 @@ import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 
 Page {
-    id: notification
     property int indexList
+    id: notification
 
     Popup {
         id: popup
@@ -19,6 +19,7 @@ Page {
             id: rowLayout
             Label {
                 text: qsTr("Get notification?")
+
                 MouseArea {
                     anchors.fill: parent
                     onClicked: switchNotification.checked = !switchNotification.checked
@@ -34,25 +35,26 @@ Page {
 
     Dialog {
         id: dialogDeleteOne
-        title: "Are you sure?"
-        modal: true
         anchors.centerIn: parent
+        modal: true
+
         font.pixelSize: fontSizeNormal
+        title: "Are you sure?"
 
         DialogButtonBox {
             Button {
-                text: qsTr("No")
                 DialogButtonBox.buttonRole: DialogButtonBox.NoRole
                 Material.background: Material.Red
                 Material.foreground: "White"
                 font.pixelSize: fontSizeNormal
+                text: qsTr("No")
             }
             Button {
-                text: qsTr("Yes")
                 DialogButtonBox.buttonRole: DialogButtonBox.YesRole
                 Material.background: Material.Green
                 Material.foreground: "White"
                 font.pixelSize: fontSizeNormal
+                text: qsTr("Yes")
             }
 
             onAccepted: {
@@ -66,25 +68,26 @@ Page {
 
     Dialog {
         id: dialogDeleteAll
-        title: "Are you sure?"
-        modal: true
         anchors.centerIn: parent
+        modal: true
+
         font.pixelSize: fontSizeNormal
+        title: "Are you sure?"
 
         DialogButtonBox {
             Button {
-                text: qsTr("No")
                 DialogButtonBox.buttonRole: DialogButtonBox.NoRole
                 Material.background: Material.Red
                 Material.foreground: "White"
                 font.pixelSize: fontSizeNormal
+                text: qsTr("No")
             }
             Button {
-                text: qsTr("Yes")
                 DialogButtonBox.buttonRole: DialogButtonBox.YesRole
                 Material.background: Material.Green
                 Material.foreground: "White"
                 font.pixelSize: fontSizeNormal
+                text: qsTr("Yes")
             }
 
             onAccepted: {
@@ -104,15 +107,17 @@ Page {
             ToolButton {
                 id: toolButtonBack
                 icon.source: "qrc:/assets/backArrow.png"
+
                 onClicked: stack.pop()
             }
 
             Label {
                 text: "Notification"
-                elide: Label.ElideRight
+                Layout.fillWidth: true
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
-                Layout.fillWidth: true
+
+                elide: Label.ElideRight
                 font.bold: true
                 font.pixelSize: fontSizeToolBar
             }
@@ -120,7 +125,9 @@ Page {
             ToolButton {
                 id: toolButtonKebabMenu
                 icon.source: "qrc:/assets/threeDotsBlack.png"
+
                 onClicked: contextMenu.open()
+
                 Menu {
                     id: contextMenu
                     x: -(width * 80 / 100)
@@ -128,14 +135,18 @@ Page {
                     font.pixelSize: fontSizeNormal
                     MenuItem {
                         icon.source: "qrc:/assets/trash.png"
-                        text: "Delete All"
+
                         font.pixelSize: fontSizeNormal
+                        text: "Delete All"
+
                         onClicked: dialogDeleteAll.open()
                     }
                     MenuItem {
                         icon.source: "qrc:/assets/settings.png"
-                        text: "Settings"
+
                         font.pixelSize: fontSizeNormal
+                        text: "Settings"
+
                         onClicked: popup.open()
                     }
                 }
@@ -154,7 +165,6 @@ Page {
             ListElement {name: "Alex"}
             ListElement {name: "Xande"}
             ListElement {name: "X"}
-
         }
 
         header: Item {
@@ -162,36 +172,39 @@ Page {
         }
 
         delegate: Pane {
-            Material.elevation: 6
             width: listViewNotification.width * 90 / 100
             height: listViewNotification.height * 15 / 100
             anchors.horizontalCenter: parent.horizontalCenter
+            Material.elevation: 6
+
             Item {
                 anchors.fill: parent
 
                 Image {
                     id: imagePerson
-                    source: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                    anchors.verticalCenter: parent.verticalCenter
-                    fillMode: Image.PreserveAspectCrop
                     width: parent.height * 70 / 100
                     height: width
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    fillMode: Image.PreserveAspectCrop
+                    source: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
                 }
 
                 Label {
                     id: namePerson
+                    width: parent.width * 55 / 100
                     anchors.left: imagePerson.right
                     anchors.leftMargin: parent.width * 5 / 100
-                    width: parent.width * 55 / 100
+
                     clip: true
-                    text: model.name
                     font.pixelSize: fontSizeNormal
                     font.bold: true
+                    text: model.name
                 }
 
                 Label {
                     id: textNotification
-                    text: qsTr("Opa RAPAZIAD, va as sd a das dai ter jogo de volei no forrodromo na quinta feira Opa RAPAZIAD, vai ter jogo de volei no forrodromo na quinta feira Opa RAPAZIAD, vai ter jogo de volei no forrodromo na quinta feiraOpa RAPAZIAD, vai ter jogo de volei no forrodromo na quinta feira")
+                    width: parent.width * 60 / 100
                     anchors.left: imagePerson.right
                     anchors.leftMargin: parent.width * 5 / 100
                     anchors.top: namePerson.bottom
@@ -199,27 +212,31 @@ Page {
                     anchors.right: kebabMenu.left
                     anchors.rightMargin: parent.width * 5 / 100
                     anchors.bottom: parent.bottom
-                    width: parent.width * 60 / 100
+
+                    Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
                     elide: "ElideRight"
                     wrapMode: "WordWrap"
                     clip: true
                     font.pixelSize: fontSizeNormal
-                    Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
+                    text: qsTr("Opa RAPAZIAD, va as sd a das dai ter jogo de volei no forrodromo na quinta feira Opa RAPAZIAD, vai ter jogo de volei no forrodromo na quinta feira Opa RAPAZIAD, vai ter jogo de volei no forrodromo na quinta feiraOpa RAPAZIAD, vai ter jogo de volei no forrodromo na quinta feira")
                 }
 
                 Label {
                     id: dateNotification
                     anchors.right: kebabMenu.left
-                    text: "10 mar"
+
                     font.pixelSize: fontSizeNormal
+                    text: "10 mar"
                 }
 
                 RoundButton {
                     id: kebabMenu
                     anchors.right: parent.right
-                    icon.source: "qrc:/assets/trash.png"
                     anchors.verticalCenter: parent.verticalCenter
                     Material.elevation: 0
+
+                    icon.source: "qrc:/assets/trash.png"
+
                     onClicked: {
                         indexList = index
                         dialogDeleteOne.open()
