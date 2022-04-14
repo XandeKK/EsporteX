@@ -34,7 +34,6 @@ Drawer {
         model: ListModel {
             ListElement {icon: "qrc:/assets/home.png"; name: "Home"}
             ListElement {icon: "qrc:/assets/profile.png"; name: "Profile"}
-            ListElement {icon: "qrc:/assets/letter.png"; name: "Chat"}
         }
 
         delegate: ItemDelegate {
@@ -47,8 +46,6 @@ Drawer {
                     return true
                 }else if(tabBar.currentIndex == 1 && name === "Profile"){
                     return true
-                }else if(tabBar.currentIndex == 2 && name === "Chat"){
-                    return true
                 }else {
                     return false
                 }
@@ -60,9 +57,6 @@ Drawer {
                     break
                 case "Profile":
                     tabBar.currentIndex = 1
-                    break
-                case "Chat":
-                    tabBar.currentIndex = 2
                     break
                 }
                 close()

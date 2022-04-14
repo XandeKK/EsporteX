@@ -61,9 +61,6 @@ Page {
                     case 1:
                         "Profile"
                         break
-                    case 2:
-                        "Chat"
-                        break
                     }
                 }
 
@@ -93,10 +90,6 @@ Page {
         TabButton {
             icon.source: "qrc:/assets/profile.png"
         }
-
-        TabButton {
-            icon.source: "qrc:/assets/letter.png"
-        }
     }
 
     DrawerNavigation {id: drawer}
@@ -113,10 +106,6 @@ Page {
 
         Loader {
             sourceComponent: Profile {}
-        }
-
-        Loader {
-            sourceComponent: Chat {}
         }
     }
 }

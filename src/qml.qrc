@@ -7,7 +7,6 @@
         <file>assets/Bell.png</file>
         <file>assets/home.png</file>
         <file>assets/profile.png</file>
-        <file>assets/letter.png</file>
         <file>Window/Test.qml</file>
         <file>Control/DrawerNavigation.qml</file>
         <file>assets/about.png</file>
@@ -17,7 +16,6 @@
         <file>assets/backArrow.png</file>
         <file>Window/SwipeHome/ListGame.qml</file>
         <file>Window/SwipeHome/Profile.qml</file>
-        <file>Window/SwipeHome/Chat.qml</file>
         <file>assets/add.png</file>
         <file>Window/Login.qml</file>
         <file>assets/facebook.png</file>
