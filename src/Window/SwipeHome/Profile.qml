@@ -148,12 +148,16 @@ Page {
                 id: twitterItem
                 icon.source: "qrc:/assets/twitterProfile.png"
                 text: "@paulKKsio"
+                Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
+                font.pixelSize: fontSizeNormal
             }
 
             ItemDelegate {
                 id: instragramItem
                 icon.source: "qrc:/assets/instagramProfile.png"
                 text: "@paulksio"
+                Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
+                font.pixelSize: fontSizeNormal
             }
         }
 
