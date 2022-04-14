@@ -51,5 +51,7 @@
         <file>Window/SwipeHome/profile/SwipeFollow/Follow.qml</file>
         <file>Window/SwipeHome/profile/SwipeFollow/Followers.qml</file>
         <file>Window/SwipeHome/profile/Participation.qml</file>
+        <file>assets/instagramProfile.png</file>
+        <file>assets/twitterProfile.png</file>
     </qresource>
 </RCC>

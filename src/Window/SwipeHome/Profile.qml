@@ -142,6 +142,21 @@ Page {
             font.pixelSize: fontSizeNormal
             color: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
         }
+
+        Row {
+            ItemDelegate {
+                id: twitterItem
+                icon.source: "qrc:/assets/twitterProfile.png"
+                text: "@paulKKsio"
+            }
+
+            ItemDelegate {
+                id: instragramItem
+                icon.source: "qrc:/assets/instagramProfile.png"
+                text: "@paulksio"
+            }
+        }
+
         Label {
             Layout.preferredWidth: parent.width
             font.pixelSize: fontSizeNormal
@@ -152,7 +167,6 @@ Page {
         }
 
         RowLayout {
-//            Layout.preferredWidth: parent.width
             ItemDelegate {
                 Layout.preferredWidth: columnLayout.width * 80 / 100
                 icon.source: "qrc:/assets/mark.png"
