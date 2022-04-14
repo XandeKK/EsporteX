@@ -14,8 +14,7 @@ Page {
                 id: toolButtonBack
                 icon.source: "qrc:/assets/backArrow.png"
                 onClicked: {
-                    stack.pop(null)
-                    stack.replace("qrc:/Window/Home.qml", StackView.PopTransition)
+                    stack.pop()
                 }
             }
 
