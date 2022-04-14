@@ -19,6 +19,8 @@ Page {
             id: rowLayout
             Label {
                 text: qsTr("Get notification?")
+                Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
+                font.pixelSize: fontSizeNormal
 
                 MouseArea {
                     anchors.fill: parent
@@ -187,7 +189,7 @@ Page {
                     anchors.verticalCenter: parent.verticalCenter
 
                     fillMode: Image.PreserveAspectCrop
-                    source: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                    source: "http://10.0.0.22/assets/profile.jpg"
                 }
 
                 Label {
