@@ -14,12 +14,8 @@ Page {
         z: 1
 
         font.pixelSize: fontSizeLarge
+        font.bold: true
         text: "Choose your preferred sport(s):"
-
-        background: Rectangle {
-            anchors.fill: parent
-            color: "white"
-        }
     }
 
     Separator {
@@ -37,6 +33,8 @@ Page {
 
         cellWidth: parent.width * 31 / 100
         cellHeight: cellWidth
+
+        clip: true
 
         header: Item {
             height: grid.height * 5 / 100
@@ -70,11 +68,13 @@ Page {
                 }
             }
             Pane {
+                property color materialBackground: Material.theme === Material.Dark ? "#242424" : "white"
+                property color colorSelected: Material.theme === Material.Dark ? "#1c1c1c" : "#c2c2c2"
                 id: pane
                 anchors.fill: parent
                 Material.elevation: 3
 
-                Material.background: isSelected ? Material.Grey : Material.White
+                Material.background: isSelected ? colorSelected : materialBackground
 
                 Image {
                     id: sportImage

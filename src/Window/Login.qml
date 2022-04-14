@@ -74,6 +74,8 @@ Page {
 
                 font.pixelSize: fontSizeNormal
                 text: model.name
+
+                onClicked: stack.replace("qrc:/Window/CreateAccount.qml")
             }
         }
 

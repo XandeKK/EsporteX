@@ -55,5 +55,6 @@
         <file>assets/twitterProfile.png</file>
         <file>Control/ToolBarBack.qml</file>
         <file>Control/Separator.qml</file>
+        <file>Window/CreateAccount.qml</file>
     </qresource>
 </RCC>
