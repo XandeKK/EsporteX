@@ -77,10 +77,6 @@ Page {
             }
 
             ToolButton {
-                id: toolButtonNotification
-                icon.source: "qrc:/assets/Bell.png"
-
-                onClicked: stack.push("qrc:/Window/Notification.qml")
             }
         }
     }

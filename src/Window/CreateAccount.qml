@@ -33,7 +33,7 @@ Page {
 
             onAccepted: {
                 dialog.close()
-                stack.replace("qrc:/Window/PreferredSport.qml")
+                stack.replace("qrc:/Window/Home.qml")
             }
 
             onRejected: dialog.close()
