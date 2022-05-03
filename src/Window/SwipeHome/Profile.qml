@@ -103,30 +103,6 @@ Page {
 
             font.pixelSize: fontSizeNormal
             font.capitalization: "MixedCase"
-            text: "42\nFollow"
-
-            onClicked: stack.push("qrc:/Window/SwipeHome/profile/SwipeFollow.qml")
-        }
-
-        Button {
-            Layout.preferredWidth: parent.width / parent.total
-            Layout.alignment: Qt.AlignCenter
-            flat: true
-
-            font.pixelSize: fontSizeNormal
-            font.capitalization: "MixedCase"
-            text: "12\nFollowers"
-
-            onClicked: stack.push("qrc:/Window/SwipeHome/profile/SwipeFollow.qml")
-        }
-
-        Button {
-            Layout.preferredWidth: parent.width / parent.total
-            Layout.alignment: Qt.AlignRight
-            flat: true
-
-            font.pixelSize: fontSizeNormal
-            font.capitalization: "MixedCase"
             text: "30\nParticipation"
 
             onClicked: stack.push("qrc:/Window/SwipeHome/profile/Participation.qml")

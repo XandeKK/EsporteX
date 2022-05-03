@@ -47,9 +47,6 @@
         <file>assets/Login.png</file>
         <file>assets/paper.png</file>
         <file>Window/SwipeHome/profile/SettingsProfile.qml</file>
-        <file>Window/SwipeHome/profile/SwipeFollow.qml</file>
-        <file>Window/SwipeHome/profile/SwipeFollow/Follow.qml</file>
-        <file>Window/SwipeHome/profile/SwipeFollow/Followers.qml</file>
         <file>Window/SwipeHome/profile/Participation.qml</file>
         <file>assets/instagramProfile.png</file>
         <file>assets/twitterProfile.png</file>

@@ -34,34 +34,8 @@ Page {
         spacing: 0
 
         Button {
-            id: buttonFollow
-            Layout.alignment: Qt.AlignLeft
-            Layout.preferredWidth: parent.width / parent.total
-            flat: true
-
-            font.capitalization: "MixedCase"
-            font.pixelSize: fontSizeNormal
-            text: "42\nFollow"
-
-            onClicked: stack.push("qrc:/Window/SwipeHome/profile/SwipeFollow.qml")
-        }
-
-        Button {
-            id: buttonFollowers
-            Layout.alignment: Qt.AlignCenter
-            Layout.preferredWidth: parent.width / parent.total
-            flat: true
-
-            font.pixelSize: fontSizeNormal
-            font.capitalization: "MixedCase"
-            text: "12\nFollowers"
-
-            onClicked: stack.push("qrc:/Window/SwipeHome/profile/SwipeFollow.qml")
-        }
-
-        Button {
             id: buttonParticipation
-            Layout.alignment: Qt.AlignRight
+            Layout.alignment: Qt.AlignLeft
             Layout.preferredWidth: parent.width / parent.total
             flat: true
 
