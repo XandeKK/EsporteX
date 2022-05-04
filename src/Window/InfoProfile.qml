@@ -3,8 +3,14 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 import "../Control/"
+import "../"
 
 Page {
+    property var infoProfile: {
+        let dataJson = _database.getInfoProfile(PropertyVar.organizer_id)
+        console.log()
+        return JSON.parse(dataJson)[0]
+    }
     header: ToolBarBack {
         labelToolBar: "Info Profile"
     }
@@ -20,7 +26,7 @@ Page {
 
         fillMode: Image.PreserveAspectCrop
         mipmap: true
-        source: "http://10.0.0.22/assets/profile.jpg"
+        source: infoProfile["image"]
     }
 
     RowLayout {
@@ -60,14 +66,14 @@ Page {
             id: labelName
             font.pixelSize: fontSizeLarge
             font.bold: true
-            text: "Paul Ksio"
+            text: infoProfile["name"]
         }
 
         Label {
             id: labelUserName
             font.pixelSize: fontSizeNormal
             color: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
-            text: "@paulKsio"
+            text: infoProfile["username"]
         }
 
         Row {
@@ -78,7 +84,7 @@ Page {
                 icon.source: "qrc:/assets/twitterProfile.png"
 
                 font.pixelSize: fontSizeNormal
-                text: "@paulKKsio"
+                text: "@" + infoProfile["twitter"] // Colocar uma condição se caso estiver vazio é para ficar invisivel
             }
 
             ItemDelegate {
@@ -88,7 +94,7 @@ Page {
                 icon.source: "qrc:/assets/instagramProfile.png"
 
                 font.pixelSize: fontSizeNormal
-                text: "@paulksio"
+                text: "@" + infoProfile["instagram"]// Colocar uma condição se caso estiver vazio é para ficar invisivel
             }
         }
 
@@ -101,7 +107,7 @@ Page {
             clip: true
 
             font.pixelSize: fontSizeNormal
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae accumsan nibh. Integer posuere, sem a dapibus convallis, nulla magna fringilla eros, eget euismod magna ligula sit amet felis. In faucibus consequat lectus efficitur laoreet"
+            text: infoProfile["description"]
         }
 
         RowLayout {
@@ -113,19 +119,11 @@ Page {
                 icon.source: "qrc:/assets/mark.png"
 
                 font.pixelSize: fontSizeNormal
-                text: "Amityville, New York(NY)"
+                text: infoProfile["instagram"]
             }
 
             Item {
                 Layout.fillWidth: true
-            }
-
-            RoundButton {
-                id: buttonFollowUser
-                highlighted: true
-
-                font.bold: true
-                text: "Follow"
             }
         }
     }

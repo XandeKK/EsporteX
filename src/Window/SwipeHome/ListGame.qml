@@ -1,6 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
+import "js/ListGame.js" as JS
+import "../../"
 
 Page {
     GridView {
@@ -20,13 +22,8 @@ Page {
         }
 
         model: ListModel {
-            ListElement {image: "http://10.0.0.22/assets/volleyball.png"; sport: "Volleyball"}
-            ListElement {image: "http://10.0.0.22/assets/soccer.png"; sport: "Soccer"}
-            ListElement {image: "http://10.0.0.22/assets/volleyball.png"; sport: "Volleyball"}
-            ListElement {image: "http://10.0.0.22/assets/soccer.png"; sport: "Soccer"}
-            ListElement {image: "http://10.0.0.22/assets/volleyball.png"; sport: "Volleyball"}
-            ListElement {image: "http://10.0.0.22/assets/soccer.png"; sport: "Soccer"}
-
+            id: listModelSports
+            Component.onCompleted: JS.getSports()
         }
 
         delegate: ItemDelegate {
@@ -37,7 +34,11 @@ Page {
                 anchors.fill: parent
                 z: 1
 
-                onClicked: stack.push("qrc:/Window/SwipeSport.qml")
+                onClicked: {
+                    PropertyVar.sport_id = sport_id
+                    PropertyVar.nameSport = sport
+                    stack.push("qrc:/Window/SwipeGames.qml")
+                }
             }
             Pane {
                 anchors.fill: parent

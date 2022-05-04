@@ -32,7 +32,7 @@
         <file>assets/markDark.png</file>
         <file>assets/profileDark.png</file>
         <file>assets/timeDark.png</file>
-        <file>Window/SwipeSport.qml</file>
+        <file>Window/SwipeGames.qml</file>
         <file>Window/SwipeSport/SportCreateByYou.qml</file>
         <file>Window/InsertLocale.qml</file>
         <file>Window/js/CreateGame.js</file>
@@ -51,5 +51,10 @@
         <file>Control/ToolBarBack.qml</file>
         <file>Control/Separator.qml</file>
         <file>Window/CreateAccount.qml</file>
+        <file>Window/js/CreateAccount.js</file>
+        <file>Window/SwipeHome/js/ListGame.js</file>
+        <file>Window/SwipeSport/js/Sport.js</file>
+        <file>PropertyVar.qml</file>
+        <file>qmldir</file>
     </qresource>
 </RCC>

@@ -1,8 +1,12 @@
 QT += quick
 QT += gui
+QT += sql
+QT += core
+QT += network
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+        src/cpp/database.cpp
 
 resources.prefix = /$${TARGET}
 RESOURCES += src/qml.qrc
@@ -32,3 +36,6 @@ contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_PACKAGE_SOURCE_DIR = \
         $$PWD/android
 }
+
+HEADERS += \
+    src/cpp/database.h

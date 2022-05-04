@@ -3,8 +3,14 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 import "../Control/"
+import "../"
 
 Page {
+    property var infoGame: {
+        let dataJson = _database.getInfoGame(PropertyVar.game_id)
+        return JSON.parse(dataJson)[0]
+    }
+
     header: ToolBar {
         Material.foreground: "white"
         RowLayout {
@@ -98,7 +104,7 @@ Page {
                             anchors.leftMargin: parent.width * 2.5 / 100
 
                             font.pixelSize: fontSizeNormal
-                            text: "VolleyBall"
+                            text: infoGame["sport"]["sport"]
                         }
                     }
                 }
@@ -132,12 +138,15 @@ Page {
                             anchors.leftMargin: parent.width * 2.5 / 100
 
                             font.pixelSize: fontSizeNormal
-                            text: "Alexandre"
+                            text: infoGame["name"]
                         }
 
                         ItemDelegate {
                             anchors.fill: parent
-                            onClicked: stack.push("qrc:/Window/InfoProfile.qml")
+                            onClicked: {
+                                PropertyVar.organizer_id = 9//infoGame["user_id"]
+                                stack.push("qrc:/Window/InfoProfile.qml")
+                            }
                         }
                     }
                 }
@@ -171,7 +180,7 @@ Page {
                             anchors.leftMargin: parent.width * 2.5 / 100
 
                             font.pixelSize: fontSizeNormal
-                            text: "Rua Pedro Antônio de Souza, Lagarto, Sergipe"
+                            text: infoGame["address"]
                         }
                         ItemDelegate {
                             anchors.fill: parent
@@ -208,7 +217,7 @@ Page {
                             anchors.leftMargin: parent.width * 2.5 / 100
 
                             font.pixelSize: fontSizeNormal
-                            text: "Started: 10:00 and finish: 14:00"
+                            text: infoGame["start"] + " - " + infoGame["end"]
                         }
                     }
                 }
@@ -241,7 +250,7 @@ Page {
                             anchors.fill: parent
                             anchors.leftMargin: parent.width * 2.5 / 100
                             font.pixelSize: fontSizeNormal
-                            text: "10/10/2010"
+                            text: infoGame["date"]
                         }
                     }
                 }
@@ -277,7 +286,7 @@ Page {
                             clip: true
                             wrapMode: Text.WordWrap
                             font.pixelSize: fontSizeNormal
-                            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac ultrices nunc. Cras aliquam turpis ut luctus fringilla. Aliquam vel vulputate eros. Morbi luctus, nulla a aliquam viverra, arcu neque accumsan quam, quis consequat risus orci nec magna. Vestibulum fringilla, elit vitae elementum auctor, lacus ex cursus elit, venenatis laoreet ipsum eros vel urna. Proin mattis suscipit rhoncus. Nunc eget tempus ipsum. Nulla viverra eu eros ut commodo. Donec non pharetra arcu, at venenatis eros. Nunc volutpat purus et elit lacinia, in ultricies arcu auctor. Vestibulum purus elit, ultrices a ante et, feugiat pharetra nunc. Sed tincidunt blandit lorem, eget porttitor nisl congue a. Maecenas et lacus nec lacus semper accumsan eu id tortor. Integer aliquam eros eu urna elementum tempor. Donec mattis, nisi ac laoreet auctor, mi ipsum ultricies ipsum, non dictum lacus libero vitae purus."
+                            text: infoGame["description"]
                         }
                     }
                 }

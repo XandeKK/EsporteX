@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
+import "../../"
+import "./js/Sport.js" as Sport
 
 Page {
     ListView {
@@ -9,7 +11,10 @@ Page {
         anchors.fill: parent
         spacing: 10
 
-        model: 10
+        model: ListModel {
+            id: listModelGames
+            Component.onCompleted: Sport.getGames(PropertyVar.sport_id)
+        }
 
         header: Item {
             height: 30
@@ -26,7 +31,10 @@ Page {
 
             ItemDelegate {
                 anchors.fill: parent
-                onClicked: stack.push("qrc:/Window/InfoGame.qml")
+                onClicked: {
+                    PropertyVar.game_id = game_id
+                    stack.push("qrc:/Window/InfoGame.qml")
+                }
 
                 Column {
                     id: columnLeft
@@ -56,7 +64,7 @@ Page {
                             verticalAlignment: Text.AlignVCenter
 
                             font.pixelSize: fontSizeNormal
-                            text: qsTr("Alexandre")
+                            text: name
                         }
                     }
 
@@ -84,7 +92,7 @@ Page {
                             clip: true
                             elide: Text.ElideRight
                             font.pixelSize: fontSizeNormal
-                            text: qsTr("Rua Pedro Antônio dos Santos Rua Pedro Antônio dos Santos Rua Pedro Antônio dos Santos")
+                            text: qsTr(address)
                         }
                     }
                 }
@@ -118,7 +126,7 @@ Page {
 
                             clip: true
                             font.pixelSize: fontSizeNormal
-                            text: qsTr("10/04/2022")
+                            text: qsTr(date)
                         }
                     }
 
@@ -145,7 +153,7 @@ Page {
 
                             clip: true
                             font.pixelSize: fontSizeNormal
-                            text: qsTr("10:00 - 12:00")
+                            text: qsTr(start + " - " + end)
                         }
                     }
                 }

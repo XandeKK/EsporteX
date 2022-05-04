@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 import "../Control/"
+import "js/CreateAccount.js" as JS
 
 Page {
     Dialog {
@@ -33,6 +34,15 @@ Page {
 
             onAccepted: {
                 dialog.close()
+                _database.postUser(
+                            fieldName.text,
+                            fieldUserName.text,
+                            comboBoxState.currentIndex + 1,
+                            comboBoxCity.currentIndex + 1,
+                            fieldTwitter.text,
+                            fieldInstagram.text,
+                            fieldDescription.text
+                            )
                 stack.replace("qrc:/Window/Home.qml")
             }
 
@@ -131,8 +141,9 @@ Page {
                 }
 
                 ComboBox {
+                    id: comboBoxState
                     width: parent.width * 82 / 100
-                    model: [ "Sergipe", "São Paulo" ]
+                    model: JS.getStates()
 
                     editable: true
 
@@ -156,8 +167,9 @@ Page {
                 }
 
                 ComboBox {
+                    id: comboBoxCity
                     width: parent.width * 82 / 100
-                    model: [ "Lagarto", "Simão dias", "Aracaju" ]
+                    model: JS.getCities(comboBoxState.currentIndex + 1)
 
                     editable: true
 
@@ -223,7 +235,6 @@ Page {
                 }
 
             }
-
 
             Column {
                 id: columnDescription

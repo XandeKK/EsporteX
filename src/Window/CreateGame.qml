@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 import "./js/CreateGame.js" as FuncCreateGame
+import "./js/CreateAccount.js" as FuncAddress
 import "../Control/"
 
 Page {
@@ -34,6 +35,15 @@ Page {
 
             onAccepted: {
                 dialog.close()
+                let json = _database.postGame(comboBoxSport.currentIndex + 1,
+                                              comboBoxState.currentIndex + 1,
+                                              comboBoxCity.currentIndex + 1,
+                                              fieldAddress.text,
+                                              fieldDate.text,
+                                              fieldDescription.text,
+                                              fieldStart.text,
+                                              fieldEnd.text
+                        )
                 stack.pop(null)
                 stack.push("qrc:/Window/InfoGame.qml")
             }
@@ -80,8 +90,9 @@ Page {
                 }
 
                 ComboBox {
+                    id: comboBoxSport
                     width: parent.width * 82 / 100
-                    model: [ "VolleyBall", "Soccer", "BasketBall", "Tennis"]
+                    model: FuncCreateGame.getSports()
 
                     font.pixelSize: fontSizeNormal
                 }
@@ -102,17 +113,12 @@ Page {
                     text: "State:"
                 }
 
-                TextField {
-                    id: fieldState
+                ComboBox {
+                    id: comboBoxState
                     width: parent.width * 82 / 100
+                    model: FuncAddress.getStates()
 
                     font.pixelSize: fontSizeNormal
-                    placeholderText: "State"
-
-                    Keys.onReturnPressed: {
-                        fieldState.focus = false
-                        fieldCity.focus = true
-                    }
                 }
 
             }
@@ -131,19 +137,13 @@ Page {
                     text: "City:"
                 }
 
-                TextField {
-                    id: fieldCity
+                ComboBox {
+                    id: comboBoxCity
                     width: parent.width * 82 / 100
+                    model: FuncAddress.getCities(comboBoxState.currentIndex + 1)
+
                     font.pixelSize: fontSizeNormal
-
-                    placeholderText: "City"
-
-                    Keys.onReturnPressed: {
-                        fieldCity.focus = false
-                        fieldAddress.focus = true
-                    }
                 }
-
             }
 
             Row {

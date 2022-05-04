@@ -34,3 +34,18 @@ function isValidDate(dateString) {
     }
 
 }
+
+function getSports(){
+    let dataJson = _database.getSports()
+
+    dataJson = JSON.parse(dataJson)
+
+    let arrayCSports = []
+
+    for(let i=0; i<dataJson.length; i++){
+        arrayCSports.push(dataJson[i]["sport"])
+    }
+
+    return arrayCSports
+}
+

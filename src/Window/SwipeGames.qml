@@ -4,10 +4,11 @@ import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 import "./SwipeSport"
 import "../Control/"
+import "../"
 
 Page {
     header: ToolBarBack {
-        labelToolBar: "Sport List"
+        labelToolBar: PropertyVar.nameSport
     }
 
     TabBar {
