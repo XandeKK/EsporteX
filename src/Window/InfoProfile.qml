@@ -8,7 +8,6 @@ import "../"
 Page {
     property var infoProfile: {
         let dataJson = _database.getInfoProfile(PropertyVar.organizer_id)
-        console.log()
         return JSON.parse(dataJson)[0]
     }
     header: ToolBarBack {
@@ -26,7 +25,7 @@ Page {
 
         fillMode: Image.PreserveAspectCrop
         mipmap: true
-        source: infoProfile["image"]
+        source: "data:image/png;base64," + infoProfile["image"]
     }
 
     RowLayout {
@@ -73,7 +72,7 @@ Page {
             id: labelUserName
             font.pixelSize: fontSizeNormal
             color: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
-            text: infoProfile["username"]
+            text: "@" + infoProfile["username"]
         }
 
         Row {

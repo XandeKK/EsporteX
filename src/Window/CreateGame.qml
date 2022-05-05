@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.15
 import "./js/CreateGame.js" as FuncCreateGame
 import "./js/CreateAccount.js" as FuncAddress
 import "../Control/"
+import "../"
 
 Page {
     Dialog {
@@ -44,6 +45,8 @@ Page {
                                               fieldStart.text,
                                               fieldEnd.text
                         )
+                json = JSON.parse(json)
+                PropertyVar.game_id = json["id"]
                 stack.pop(null)
                 stack.push("qrc:/Window/InfoGame.qml")
             }

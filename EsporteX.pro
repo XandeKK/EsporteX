@@ -3,6 +3,7 @@ QT += gui
 QT += sql
 QT += core
 QT += network
+QT += widgets
 
 SOURCES += \
         main.cpp \

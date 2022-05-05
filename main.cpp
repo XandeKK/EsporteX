@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::Round);
 
     Database database;
+    database.openSqliteDatabase();
 
     QQmlApplicationEngine engine;
     const QUrl url("qrc:/Window/main.qml");

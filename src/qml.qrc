@@ -56,5 +56,6 @@
         <file>Window/SwipeSport/js/Sport.js</file>
         <file>PropertyVar.qml</file>
         <file>qmldir</file>
+        <file>Window/Game/EditGame.qml</file>
     </qresource>
 </RCC>

@@ -126,7 +126,10 @@ Page {
 
                             clip: true
                             font.pixelSize: fontSizeNormal
-                            text: qsTr(date)
+                            text: {
+                                let date_tmp = date.split("-")
+                                return date_tmp[2] + "/" + date_tmp[1] + "/" + date_tmp[0]
+                            }
                         }
                     }
 
@@ -153,7 +156,7 @@ Page {
 
                             clip: true
                             font.pixelSize: fontSizeNormal
-                            text: qsTr(start + " - " + end)
+                            text: qsTr(start.substr(11, 5) + " - " + end.substr(11, 5))
                         }
                     }
                 }

@@ -3,8 +3,13 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 import "../../../Control/"
+import "../../js/CreateAccount.js" as JS
+import "../../../"
 
 Page {
+    property var info: {
+        JSON.parse(_database.getUser())
+    }
     Dialog {
         id: dialog
         anchors.centerIn: parent
@@ -30,7 +35,17 @@ Page {
             }
 
             onAccepted: {
+                _database.putUser(fieldName.text,
+                                   fieldTwitter.text,
+                                   fieldInstagram.text,
+                                   fieldDescription.text,
+                                   comboBoxState.currentText,
+                                   comboBoxCity.currentText,
+                                   comboBoxState.currentIndex + 1,
+                                   comboBoxCity.currentIndex + 1)
                 dialog.close()
+                PropertyVar.changeUser = !PropertyVar.changeUser
+                stack.pop()
             }
 
             onRejected: dialog.close()
@@ -78,6 +93,7 @@ Page {
 
                     font.pixelSize: fontSizeNormal
                     placeholderText: "Name"
+                    text: info["name"]
 
                     Keys.onReturnPressed: {
                         fieldName.focus = false
@@ -87,6 +103,59 @@ Page {
             }
 
             Row {
+                id: rowState
+                width: parent.width
+                spacing: parent.width * 3 / 100
+
+                Label {
+                    width: parent.width * 20 / 100
+                    height: parent.height
+                    verticalAlignment: "AlignVCenter"
+
+                    font.pixelSize: fontSizeNormal
+                    text: "State:"
+                }
+
+                ComboBox {
+                    id: comboBoxState
+                    width: parent.width * 82 / 100
+                    model: JS.getStates() // Colocar no estado atual
+                    currentIndex: info["state_id"] - 1
+
+                    editable: true
+
+                    font.pixelSize: fontSizeNormal
+                }
+            }
+
+            Row {
+                id: rowCity
+                width: parent.width
+                spacing: parent.width * 3 / 100
+
+                Label {
+                    width: parent.width * 20 / 100
+                    height: parent.height
+                    verticalAlignment: "AlignVCenter"
+
+                    font.pixelSize: fontSizeNormal
+                    text: "City:"
+                }
+
+                ComboBox {
+                    id: comboBoxCity
+                    width: parent.width * 82 / 100
+                    model: JS.getCities(comboBoxState.currentIndex + 1) // Colocar na cidade atual
+                    currentIndex: info["city_id"] - 1
+
+                    editable: true
+
+                    font.pixelSize: fontSizeNormal
+                }
+
+            }
+
+            Row {
                 width: parent.width
                 spacing: parent.width * 3 / 100
 
@@ -96,19 +165,20 @@ Page {
                     verticalAlignment: "AlignVCenter"
 
                     font.pixelSize: fontSizeNormal
-                    text: "State:"
+                    text: "Twitter:"
                 }
 
                 TextField {
-                    id: fieldState
+                    id: fieldTwitter
                     width: parent.width * 82 / 100
 
                     font.pixelSize: fontSizeNormal
-                    placeholderText: "State"
+                    placeholderText: "Twitter"
+                    text: info["twitter"]
 
                     Keys.onReturnPressed: {
-                        fieldState.focus = false
-                        fieldCity.focus = true
+                        fieldTwitter.focus = false
+                        fieldInstagram.focus = true
                     }
                 }
             }
@@ -123,19 +193,20 @@ Page {
                     verticalAlignment: "AlignVCenter"
 
                     font.pixelSize: fontSizeNormal
-                    text: "City:"
+                    text: "Instagram:"
                 }
 
                 TextField {
-                    id: fieldCity
+                    id: fieldInstagram
                     width: parent.width * 82 / 100
 
                     font.pixelSize: fontSizeNormal
-                    placeholderText: "City"
+                    placeholderText: "Instagram"
+                    text: info["instagram"]
 
                     Keys.onReturnPressed: {
-                        fieldCity.focus = false
-                        fieldAddress.focus = true
+                        fieldInstagram.focus = false
+                        fieldDescription.focus = true
                     }
                 }
             }
@@ -160,6 +231,7 @@ Page {
                     wrapMode: "WordWrap"
                     font.pixelSize: fontSizeNormal
                     placeholderText: "Put here description of game"
+                    text: info["description"]
 
                     Keys.onReturnPressed: {
                         fieldDescription.focus = false

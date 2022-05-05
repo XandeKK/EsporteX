@@ -11,6 +11,42 @@ Page {
         return JSON.parse(dataJson)[0]
     }
 
+    Dialog {
+        id: dialog
+        anchors.centerIn: parent
+        modal: true
+
+        font.pixelSize: fontSizeNormal
+        title: "Are you sure?"
+
+        DialogButtonBox {
+            Button {
+                DialogButtonBox.buttonRole: DialogButtonBox.NoRole
+                Material.background: Material.Red
+                Material.foreground: "White"
+
+                font.pixelSize: fontSizeNormal
+                text: qsTr("No")
+            }
+            Button {
+                DialogButtonBox.buttonRole: DialogButtonBox.YesRole
+                Material.background: Material.Green
+                Material.foreground: "White"
+
+                font.pixelSize: fontSizeNormal
+                text: qsTr("Yes")
+            }
+
+            onAccepted: {
+                _database.deleteGame(infoGame["id"])
+                dialog.close()
+                stack.pop(null)
+            }
+
+            onRejected: dialog.close()
+        }
+    }
+
     header: ToolBar {
         Material.foreground: "white"
         RowLayout {
@@ -45,13 +81,15 @@ Page {
                     font.pixelSize: fontSizeNormal
 
                     MenuItem {
-                        icon.source: "qrc:/assets/settings.png"
+                        icon.source: "qrc:/assets/edit.png"
                         text: "Edit"
+                        onClicked: stack.push("qrc:/Window/Game/EditGame.qml")
                     }
 
                     MenuItem {
-                        icon.source: "qrc:/assets/edit.png"
+                        icon.source: "qrc:/assets/trash.png"
                         text: "Remove"
+                        onClicked: dialog.open()
                     }
                 }
             }
@@ -144,7 +182,7 @@ Page {
                         ItemDelegate {
                             anchors.fill: parent
                             onClicked: {
-                                PropertyVar.organizer_id = 9//infoGame["user_id"]
+                                PropertyVar.organizer_id = infoGame["user_id"]
                                 stack.push("qrc:/Window/InfoProfile.qml")
                             }
                         }
@@ -178,9 +216,10 @@ Page {
                             id: textAddress
                             anchors.fill: parent
                             anchors.leftMargin: parent.width * 2.5 / 100
+                            elide: "ElideRight"
 
                             font.pixelSize: fontSizeNormal
-                            text: infoGame["address"]
+                            text: infoGame["address"] + ", " + infoGame["city"]["city"] + ", " + infoGame["state"]["state"]
                         }
                         ItemDelegate {
                             anchors.fill: parent
@@ -217,7 +256,7 @@ Page {
                             anchors.leftMargin: parent.width * 2.5 / 100
 
                             font.pixelSize: fontSizeNormal
-                            text: infoGame["start"] + " - " + infoGame["end"]
+                            text: infoGame["start"].substr(11, 5) + " - " + infoGame["end"].substr(11, 5)
                         }
                     }
                 }
@@ -250,7 +289,10 @@ Page {
                             anchors.fill: parent
                             anchors.leftMargin: parent.width * 2.5 / 100
                             font.pixelSize: fontSizeNormal
-                            text: infoGame["date"]
+                            text: {
+                                let date = infoGame["date"].split("-")
+                                return date[2] + "/" + date[1] + "/" + date[0]
+                            }
                         }
                     }
                 }

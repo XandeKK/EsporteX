@@ -2,8 +2,15 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
+import QtQuick.Dialogs
+import "../../"
 
 Page {
+    property var info: {
+        JSON.parse(_database.getUser())
+    }
+    property bool changedUser: PropertyVar.changeUser
+    onChangedUserChanged: info = JSON.parse(_database.getUser())
     Dialog {
         id: dialog
         anchors.centerIn: parent
@@ -31,10 +38,33 @@ Page {
             onAccepted: {
                 popup.close()
                 dialog.close()
-                imageProfie.source = ""
+                _database.deleteImage()
+                PropertyVar.changeUser = !PropertyVar.changeUser
+                imageProfie.source = "data:image/png;base64," + info["image"]
             }
 
             onRejected: dialog.close()
+        }
+    }
+
+    Image {
+        id: imageNormal
+        width: 640
+        height: 853
+        visible: false
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: "Please choose a file"
+        nameFilters: ["Image files (*.jpg *.png *.jpeg)"]
+        onAccepted: {
+            popup.close()
+            imageNormal.source = fileDialog.currentFile
+            imageNormal.source = imageNormal.source
+            imageProfie.grabToImage(function(result) {
+                _database.putImage(result.image);
+            });
         }
     }
 
@@ -53,6 +83,7 @@ Page {
                 flat: true
                 font.capitalization: "MixedCase"
                 text: "Edit image"
+                onClicked: fileDialog.open()
             }
 
             Button {
@@ -76,7 +107,7 @@ Page {
         anchors.left: parent.left
         anchors.leftMargin: parent.width * 5 / 100
 
-        source: "http://10.0.0.22/assets/profile.jpg"
+        source: "data:image/png;base64," + info["image"]
         fillMode: Image.PreserveAspectCrop
         mipmap: true
 
@@ -121,13 +152,13 @@ Page {
         Label {
             font.pixelSize: fontSizeLarge
             font.bold: true
-            text: "Paul Ksio"
+            text: info["name"]
         }
 
         Label {
             font.pixelSize: fontSizeNormal
             color: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
-            text: "@paulKsio"
+            text: "@" + info["username"]
         }
 
         Row {
@@ -138,7 +169,7 @@ Page {
 
                 Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
                 font.pixelSize: fontSizeNormal
-                text: "@paulKKsio"
+                text: "@" + info["twitter"]
             }
 
             ItemDelegate {
@@ -148,7 +179,7 @@ Page {
 
                 Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
                 font.pixelSize: fontSizeNormal
-                text: "@paulksio"
+                text: "@" + info["instagram"]
             }
         }
 
@@ -159,7 +190,7 @@ Page {
             clip: true
             color: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
             font.pixelSize: fontSizeNormal
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae accumsan nibh. Integer posuere, sem a dapibus convallis, nulla magna fringilla eros, eget euismod magna ligula sit amet felis. In faucibus consequat lectus efficitur laoreet"
+            text: info["description"]
         }
 
         RowLayout {
@@ -170,7 +201,7 @@ Page {
 
                 Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
                 font.pixelSize: fontSizeNormal
-                text: "Amityville, New York(NY)"
+                text: info["city"] + ", " + info["state"]
             }
 
             Item {
@@ -182,7 +213,9 @@ Page {
 
                 icon.source: "qrc:/assets/settings.png"
 
-                onClicked: stack.push("qrc:/Window/SwipeHome/profile/SettingsProfile.qml")
+                onClicked: {
+                    stack.push("qrc:/Window/SwipeHome/profile/SettingsProfile.qml")
+                }
             }
         }
     }

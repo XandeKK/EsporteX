@@ -2,11 +2,16 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
-import "../Control/"
-import "js/CreateAccount.js" as JS
+import "../js/CreateGame.js" as FuncCreateGame
+import "../js/CreateAccount.js" as FuncAddress
+import "../../Control/"
+import "../../"
 
 Page {
-    Component.onCompleted: _database.dropAndCreateTables()
+    property var infoGame: {
+        let dataJson = _database.getInfoGame(PropertyVar.game_id)
+        return JSON.parse(dataJson)[0]
+    }
     Dialog {
         id: dialog
         anchors.centerIn: parent
@@ -35,22 +40,26 @@ Page {
 
             onAccepted: {
                 dialog.close()
-                _database.postUser(
-                            fieldName.text,
-                            fieldUserName.text,
-                            comboBoxState.currentIndex + 1,
-                            comboBoxCity.currentIndex + 1,
-                            fieldTwitter.text,
-                            fieldInstagram.text,
-                            fieldDescription.text,
-                            comboBoxState.currentText,
-                            comboBoxCity.currentText
-                            )
-                stack.replace("qrc:/Window/Home.qml")
+                _database.putGame(PropertyVar.game_id,
+                                  comboBoxSport.currentIndex + 1,
+                                  comboBoxState.currentIndex + 1,
+                                  comboBoxCity.currentIndex + 1,
+                                  fieldAddress.text,
+                                  fieldDate.text,
+                                  fieldDescription.text,
+                                  fieldStart.text,
+                                  fieldEnd.text
+                                  )
+                stack.pop(null)
+                stack.push("qrc:/Window/InfoGame.qml")
             }
 
             onRejected: dialog.close()
         }
+    }
+
+    header: ToolBarBack {
+        labelToolBar: "Edit Game"
     }
 
     Item {
@@ -73,60 +82,28 @@ Page {
             spacing: 20
 
             Row {
-                id: rowName
+                id: rowSports
                 width: parent.width
                 spacing: parent.width * 3 / 100
 
                 Label {
-                    width: parent.width * 20 / 100
+                    width: parent.width * 15 / 100
                     height: parent.height
                     verticalAlignment: "AlignVCenter"
 
                     font.pixelSize: fontSizeNormal
-                    text: "Name:"
+                    text: "Sport:"
                 }
 
-                TextField {
-                    id: fieldName
+                ComboBox {
+                    id: comboBoxSport
                     width: parent.width * 82 / 100
+                    model: FuncCreateGame.getSports()
+                    currentIndex: infoGame["sport"]["id"] - 1
 
                     font.pixelSize: fontSizeNormal
-                    placeholderText: "Name"
-
-                    Keys.onReturnPressed: {
-                        fieldName.focus = false
-                        fieldUserName.focus = true
-                    }
                 }
 
-            }
-
-            Row {
-                id: rowUserName
-                width: parent.width
-                spacing: parent.width * 3 / 100
-
-                Label {
-                    width: parent.width * 20 / 100
-                    height: parent.height
-                    verticalAlignment: "AlignVCenter"
-
-                    font.pixelSize: fontSizeNormal
-                    text: "UserName:"
-                }
-
-                TextField {
-                    id: fieldUserName
-                    width: parent.width * 82 / 100
-                    font.pixelSize: fontSizeNormal
-
-                    placeholderText: "UserName"
-
-                    Keys.onReturnPressed: {
-                        fieldUserName.focus = false
-                        fieldTwitter.focus = true
-                    }
-                }
             }
 
             Row {
@@ -135,7 +112,7 @@ Page {
                 spacing: parent.width * 3 / 100
 
                 Label {
-                    width: parent.width * 20 / 100
+                    width: parent.width * 15 / 100
                     height: parent.height
                     verticalAlignment: "AlignVCenter"
 
@@ -146,9 +123,8 @@ Page {
                 ComboBox {
                     id: comboBoxState
                     width: parent.width * 82 / 100
-                    model: JS.getStates()
-
-                    editable: true
+                    model: FuncAddress.getStates() // Colocar no atual
+                    currentIndex: infoGame["state"]["id"] - 1
 
                     font.pixelSize: fontSizeNormal
                 }
@@ -161,7 +137,7 @@ Page {
                 spacing: parent.width * 3 / 100
 
                 Label {
-                    width: parent.width * 20 / 100
+                    width: parent.width * 15 / 100
                     height: parent.height
                     verticalAlignment: "AlignVCenter"
 
@@ -172,71 +148,155 @@ Page {
                 ComboBox {
                     id: comboBoxCity
                     width: parent.width * 82 / 100
-                    model: JS.getCities(comboBoxState.currentIndex + 1)
-
-                    editable: true
+                    model: FuncAddress.getCities(comboBoxState.currentIndex + 1) // Colocar no atual
+                    currentIndex: infoGame["city"]["id"] - 1
 
                     font.pixelSize: fontSizeNormal
                 }
-
             }
 
             Row {
-                id: rowTwitter
+                id: rowAddress
                 width: parent.width
                 spacing: parent.width * 3 / 100
 
                 Label {
-                    width: parent.width * 20 / 100
+                    width: parent.width * 15 / 100
                     height: parent.height
                     verticalAlignment: "AlignVCenter"
 
                     font.pixelSize: fontSizeNormal
-                    text: "Twitter:"
+                    text: "Address:"
                 }
 
                 TextField {
-                    id: fieldTwitter
+                    id: fieldAddress
                     width: parent.width * 82 / 100
+                    text: infoGame["address"]
 
                     font.pixelSize: fontSizeNormal
-                    placeholderText: "Twitter"
+                    placeholderText: "Address"
 
                     Keys.onReturnPressed: {
-                        fieldTwitter.focus = false
-                        fieldInstagram.focus = true
+                        fieldAddress.focus = false
+                        fieldStart.focus = true
                     }
                 }
 
             }
 
             Row {
-                id: rowInstagram
+                id: rowStartTime
                 width: parent.width
                 spacing: parent.width * 3 / 100
 
                 Label {
-                    width: parent.width * 20 / 100
+                    width: parent.width * 15 / 100
                     height: parent.height
                     verticalAlignment: "AlignVCenter"
 
                     font.pixelSize: fontSizeNormal
-                    text: "Instagram:"
+                    text: "Start:"
                 }
 
                 TextField {
-                    id: fieldInstagram
-                    width: parent.width * 82 / 100
+                    id: fieldStart
+                    width: parent.width * 45 / 100
+                    text: infoGame["start"].substr(11, 5)
 
                     font.pixelSize: fontSizeNormal
-                    placeholderText: "Instagram"
+                    placeholderText: "Start Game Ex.: 10:00"
+
+                    inputMethodHints: Qt.ImhDigitsOnly
+                    onEditingFinished: console.log(FuncCreateGame.isValidTime(text))
 
                     Keys.onReturnPressed: {
-                        fieldInstagram.focus = false
+                        fieldStart.focus = false
+                        fieldEnd.focus = true
+                    }
+
+                    onFocusChanged: {
+                        inputMask = "00:00"
+                        cursorPosition = 0
+                    }
+                }
+            }
+
+            Row {
+                id: rowEndTime
+                width: parent.width
+                spacing: parent.width * 3 / 100
+
+                Label {
+                    width: parent.width * 15 / 100
+                    height: parent.height
+                    verticalAlignment: "AlignVCenter"
+
+                    font.pixelSize: fontSizeNormal
+                    text: "End:"
+                }
+
+                TextField {
+                    id: fieldEnd
+                    width: parent.width * 45 / 100
+
+                    font.pixelSize: fontSizeNormal
+                    placeholderText: "End Game Ex.: 13:00"
+                    text: infoGame["end"].substr(11, 5)
+
+                    inputMethodHints: Qt.ImhDigitsOnly
+                    onEditingFinished: console.log(FuncCreateGame.isValidTime(text))
+
+                    Keys.onReturnPressed: {
+                        fieldEnd.focus = false
+                        fieldDate.focus = true
+                    }
+
+                    onFocusChanged: {
+                        inputMask = "00:00"
+                        cursorPosition = 0
+                    }
+                }
+            }
+
+            Row {
+                id: rowDate
+                width: parent.width
+                spacing: parent.width * 3 / 100
+
+                Label {
+                    width: parent.width * 15 / 100
+                    height: parent.height
+                    verticalAlignment: "AlignVCenter"
+
+                    font.pixelSize: fontSizeNormal
+                    text: "Date:"
+                }
+
+                TextField {
+                    id: fieldDate
+                    width: parent.width * 45 / 100
+
+                    font.pixelSize: fontSizeNormal
+                    placeholderText: "Date Ex.: 10/10/2010"
+                    text: {
+                        let date = infoGame["date"].split("-")
+                        return date[2] + "/" + date[1] + "/" + date[0]
+                    }
+
+                    inputMethodHints: Qt.ImhDigitsOnly
+                    onEditingFinished: console.log(FuncCreateGame.isValidDate(text))
+
+                    Keys.onReturnPressed: {
+                        fieldDate.focus = false
                         fieldDescription.focus = true
                     }
-                }
 
+                    onFocusChanged: {
+                        inputMask = "00/00/0000"
+                        cursorPosition = 0
+                    }
+                }
             }
 
             Column {
@@ -259,7 +319,8 @@ Page {
                     wrapMode: "WordWrap"
 
                     font.pixelSize: fontSizeNormal
-                    placeholderText: "Put here description about you"
+                    placeholderText: "Put here description of game"
+                    text: infoGame["description"]
 
                     Keys.onReturnPressed: {
                         fieldDescription.focus = false
