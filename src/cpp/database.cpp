@@ -151,13 +151,7 @@ QByteArray Database::getGames(QString &sport_id)
 
 QByteArray Database::getGamesUser()
 {
-    QSqlQuery query("SELECT id FROM user");
-    int user_id = query.record().indexOf("id");
-    QString id;
-
-    while (query.next()){
-        id = query.value(user_id).toString();
-    }
+    QString id = getUserId();
 
     QString uri = "http://10.0.0.22:3000/game_user/" + id;
 
@@ -225,13 +219,7 @@ bool Database::postUser(QString &name, QString &userName, QString &state_id, QSt
 
 bool Database::putUser(QString &name, QString &twitter, QString &instagram, QString &description, QString &state, QString &city, QString &state_id, QString &city_id)
 {
-    QSqlQuery query("SELECT id FROM user");
-    int user_id = query.record().indexOf("id");
-    QString id;
-
-    while (query.next()){
-        id = query.value(user_id).toString();
-    }
+    QString id = getUserId();
 
     QString uri = "http://10.0.0.22:3000/users/" + id;
 
@@ -259,13 +247,9 @@ bool Database::putUser(QString &name, QString &twitter, QString &instagram, QStr
 
 void Database::putImage(QVariant var)
 {
-    QSqlQuery query("SELECT id FROM user");
-    int user_id = query.record().indexOf("id");
-    QString id;
+    QSqlQuery query;
 
-    while (query.next()){
-        id = query.value(user_id).toString();
-    }
+    QString id = getUserId();
 
     QByteArray ba;
     QBuffer bu(&ba);
@@ -288,13 +272,9 @@ void Database::putImage(QVariant var)
 
 void Database::deleteImage()
 {
-    QSqlQuery query("SELECT id FROM user");
-    int user_id = query.record().indexOf("id");
-    QString id;
+    QSqlQuery query;
 
-    while (query.next()){
-        id = query.value(user_id).toString();
-    }
+    QString id = getUserId();
 
     QString uri = "http://10.0.0.22:3000/users/" + id;
     QJsonObject obj;
@@ -364,13 +344,7 @@ QByteArray Database::postGame(QString &sport_id, QString &state_id, QString &cit
 {
     QString uri = "http://10.0.0.22:3000/games";
 
-    QSqlQuery query("SELECT id FROM user");
-    int user_id = query.record().indexOf("id");
-    QString id;
-
-    while (query.next()){
-        id = query.value(user_id).toString();
-    }
+    QString id = getUserId();
 
     QJsonObject obj;
     obj["user_id"] = id;
@@ -427,6 +401,85 @@ bool Database::deleteGame(QString &game_id)
     return false;
 }
 
+bool Database::isParticipate(QString &game_id)
+{
+    QString id = getUserId();
+
+    QString uri = "http://10.0.0.22:3000/participations/" + game_id + "?user_id=" + id + "&task=1";
+
+    QByteArray request = requestGet(uri);
+
+    QJsonDocument document = QJsonDocument::fromJson(request);
+    int documentValues = document.object()["participate"].toInt();
+
+    if(documentValues == 1){
+        return true;
+    }
+    return false;
+}
+
+bool Database::postParticipation(QString &game_id)
+{
+    QString uri = "http://10.0.0.22:3000/participations";
+
+    QString id = getUserId();
+
+    QJsonObject obj;
+    obj["user_id"] = id;
+    obj["game_id"] = game_id;
+
+    QByteArray request = requestPost(uri, obj);
+
+    QJsonDocument document = QJsonDocument::fromJson(request);
+
+    int documentValues = document.object()["sucess"].toInt();
+
+    if(documentValues >= 1){
+        return true;
+    }
+    return false;
+}
+
+bool Database::deleteParticipation(QString &game_id)
+{
+    QString id = getUserId();
+
+    QString uri = "http://10.0.0.22:3000/participations/" + game_id + "?user_id=" + id;
+
+    QByteArray request = requestDelete(uri);
+
+    QJsonDocument document = QJsonDocument::fromJson(request);
+    int documentValues = document.object()["sucess"].toInt();
+
+    if(documentValues >= 1){
+        return true;
+    }
+    return false;
+}
+
+QByteArray Database::getListParticipant(QString &game_id)
+{
+    QString uri = "http://10.0.0.22:3000/participations/" + game_id + "?task=2";
+
+    QByteArray request = requestGet(uri);
+
+    QJsonDocument document = QJsonDocument::fromJson(request);
+
+    return document.toJson(QJsonDocument::Compact);
+}
+
+int Database::countParticipation(QString &user_id)
+{
+    QString uri = "http://10.0.0.22:3000/participations/0?user_id=" + user_id + "&task=3";
+
+    QByteArray request = requestGet(uri);
+
+    QJsonDocument document = QJsonDocument::fromJson(request);
+    int documentValues = document.object()["count"].toInt();
+
+    return documentValues;
+}
+
 void Database::openSqliteDatabase()
 {
     m_db = QSqlDatabase::addDatabase("QSQLITE");
@@ -478,13 +531,10 @@ void Database::insertUser(QString &user_id, QString &name, QString &username, QS
 
 void Database::updateUser(QString &name, QString &twitter, QString &instagram, QString &description, QString &state, QString &city, QString &state_id, QString &city_id)
 {
-    QSqlQuery query("SELECT id FROM user");
-    int user_id = query.record().indexOf("id");
-    QString id;
+    QSqlQuery query;
 
-    while (query.next()){
-        id = query.value(user_id).toString();
-    }
+    QString id = getUserId();
+
 
     query.prepare("UPDATE user SET name = :name,"
                   " twitter = :twitter,"
@@ -550,6 +600,19 @@ QString Database::getUser()
     jsonDoc.setObject(mainObject);
 
     return jsonDoc.toJson(QJsonDocument::Compact);
+}
+
+QString Database::getUserId()
+{
+    QSqlQuery query("SELECT id FROM user");
+    int user_id = query.record().indexOf("id");
+    QString id;
+
+    while (query.next()){
+        id = query.value(user_id).toString();
+    }
+
+    return id;
 }
 
 

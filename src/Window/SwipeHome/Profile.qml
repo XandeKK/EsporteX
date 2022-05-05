@@ -49,8 +49,8 @@ Page {
 
     Image {
         id: imageNormal
-        width: 640
-        height: 853
+        width: sourceSize.width * 70 / 100
+        height: sourceSize.height * 70 / 100
         visible: false
     }
 
@@ -61,8 +61,8 @@ Page {
         onAccepted: {
             popup.close()
             imageNormal.source = fileDialog.currentFile
-            imageNormal.source = imageNormal.source
-            imageProfie.grabToImage(function(result) {
+            imageProfie.source = imageNormal.source
+            imageNormal.grabToImage(function(result) {
                 _database.putImage(result.image);
             });
         }
@@ -134,9 +134,7 @@ Page {
 
             font.pixelSize: fontSizeNormal
             font.capitalization: "MixedCase"
-            text: "30\nParticipation"
-
-            onClicked: stack.push("qrc:/Window/SwipeHome/profile/Participation.qml")
+            text: _database.countParticipation(_database.getUserId()) + "\nParticipation"
         }
     }
 
@@ -162,10 +160,17 @@ Page {
         }
 
         Row {
+            visible: {
+                (twitterItem || instagramItem)
+            }
+
             ItemDelegate {
                 id: twitterItem
 
                 icon.source: "qrc:/assets/twitterProfile.png"
+                visible: {
+                    !(info["twitter"] == "")
+                }
 
                 Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
                 font.pixelSize: fontSizeNormal
@@ -173,9 +178,12 @@ Page {
             }
 
             ItemDelegate {
-                id: instragramItem
+                id: instagramItem
 
                 icon.source: "qrc:/assets/instagramProfile.png"
+                visible: {
+                    !(info["instagram"] == "")
+                }
 
                 Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
                 font.pixelSize: fontSizeNormal

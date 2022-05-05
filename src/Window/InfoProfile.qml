@@ -7,7 +7,7 @@ import "../"
 
 Page {
     property var infoProfile: {
-        let dataJson = _database.getInfoProfile(PropertyVar.organizer_id)
+        let dataJson = _database.getInfoProfile(PropertyVar.people_id)
         return JSON.parse(dataJson)[0]
     }
     header: ToolBarBack {
@@ -46,9 +46,7 @@ Page {
 
             font.pixelSize: fontSizeNormal
             font.capitalization: "MixedCase"
-            text: "30\nParticipation"
-
-            onClicked: stack.push("qrc:/Window/SwipeHome/profile/Participation.qml")
+            text: _database.countParticipation(infoProfile["user_id"]) + "\nParticipation"
         }
     }
 
@@ -76,24 +74,34 @@ Page {
         }
 
         Row {
-            ItemDelegate {
-                id: twitterItem
-                Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
-
-                icon.source: "qrc:/assets/twitterProfile.png"
-
-                font.pixelSize: fontSizeNormal
-                text: "@" + infoProfile["twitter"] // Colocar uma condição se caso estiver vazio é para ficar invisivel
+            visible: {
+                (twitterItem || instagramItem)
             }
 
             ItemDelegate {
-                id: instragramItem
+                id: twitterItem
+
+                icon.source: "qrc:/assets/twitterProfile.png"
+                visible: {
+                    !(infoProfile["twitter"] == "")
+                }
+
                 Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
+                font.pixelSize: fontSizeNormal
+                text: "@" + infoProfile["twitter"]
+            }
+
+            ItemDelegate {
+                id: instagramItem
 
                 icon.source: "qrc:/assets/instagramProfile.png"
+                visible: {
+                    !(infoProfile["instagram"] == "")
+                }
 
+                Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
                 font.pixelSize: fontSizeNormal
-                text: "@" + infoProfile["instagram"]// Colocar uma condição se caso estiver vazio é para ficar invisivel
+                text: "@" + infoProfile["instagram"]
             }
         }
 
@@ -118,7 +126,7 @@ Page {
                 icon.source: "qrc:/assets/mark.png"
 
                 font.pixelSize: fontSizeNormal
-                text: infoProfile["instagram"]
+                text: infoProfile["city"]["city"] + ", " + infoProfile["state"]["state"]
             }
 
             Item {

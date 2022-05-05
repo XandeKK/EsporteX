@@ -81,6 +81,16 @@ public:
 
     Q_INVOKABLE bool deleteGame(QString &game_id);
 
+    Q_INVOKABLE bool isParticipate(QString &game_id);
+
+    Q_INVOKABLE bool postParticipation(QString &game_id);
+
+    Q_INVOKABLE bool deleteParticipation(QString &game_id);
+
+    Q_INVOKABLE QByteArray getListParticipant(QString &game_id);
+
+    Q_INVOKABLE int countParticipation(QString &user_id);
+
     void openSqliteDatabase();
     Q_INVOKABLE void dropAndCreateTables();
 
@@ -105,6 +115,8 @@ public:
                     QString &state_id,
                     QString &city_id);
     Q_INVOKABLE QString getUser();
+
+    Q_INVOKABLE QString getUserId();
 
 private:
     QSqlDatabase m_db;

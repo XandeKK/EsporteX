@@ -4,12 +4,44 @@ import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 import "../Control/"
 import "../"
+import "js/infoGame.js" as JS
 
 Page {
     property var infoGame: {
         let dataJson = _database.getInfoGame(PropertyVar.game_id)
         return JSON.parse(dataJson)[0]
     }
+
+    Popup {
+            id: popup
+            anchors.centerIn: parent
+            width: parent.width * 60 / 100
+            height: parent.height * 70 / 100
+            modal: true
+            focus: true
+            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+            ListView {
+                id: listViewPopup
+                anchors.fill: parent
+
+                model: ListModel {
+                    id: listModelPeople
+                    Component.onCompleted: JS.getListOfPeople()
+                }
+
+                delegate: ItemDelegate {
+                    width: listViewPopup.width
+                    text: name
+                    onClicked: {
+                        popup.close()
+                        PropertyVar.people_id = user_id
+                        stack.push("qrc:/Window/InfoProfile.qml")
+                    }
+                }
+
+            }
+        }
 
     Dialog {
         id: dialog
@@ -73,6 +105,7 @@ Page {
                 id: toolButtonKebabMenu
                 icon.source: "qrc:/assets/threeDotsBlack.png"
                 onClicked: contextMenu.open()
+                visible: infoGame["user_id"] == _database.getUserId()
 
                 Menu {
                     id: contextMenu
@@ -182,7 +215,7 @@ Page {
                         ItemDelegate {
                             anchors.fill: parent
                             onClicked: {
-                                PropertyVar.organizer_id = infoGame["user_id"]
+                                PropertyVar.people_id = infoGame["user_id"]
                                 stack.push("qrc:/Window/InfoProfile.qml")
                             }
                         }
@@ -216,7 +249,8 @@ Page {
                             id: textAddress
                             anchors.fill: parent
                             anchors.leftMargin: parent.width * 2.5 / 100
-                            elide: "ElideRight"
+                            clip: true
+                            wrapMode: Text.WordWrap
 
                             font.pixelSize: fontSizeNormal
                             text: infoGame["address"] + ", " + infoGame["city"]["city"] + ", " + infoGame["state"]["state"]
@@ -311,6 +345,31 @@ Page {
 
                         font.bold: true
                         font.pixelSize: fontSizeNormal
+                        text: "List of People"
+
+                        ItemDelegate {
+                            anchors.fill: parent
+                            onClicked: {
+                                popup.open()
+                            }
+                        }
+                    }
+                }
+            }
+
+            Pane {
+                width: parent.width
+                Material.elevation: 1
+
+                Column {
+                    width: parent.width
+                    spacing: 5
+
+                    Label {
+                        width: parent.width
+
+                        font.bold: true
+                        font.pixelSize: fontSizeNormal
                         text: "Description"
 
                         Separator {}
@@ -337,19 +396,42 @@ Page {
     }
 
     RoundButton {
+        property bool isParticipate: _database.isParticipate(infoGame["id"])
         id: buttonParticipate
         anchors.right: parent.right
         anchors.rightMargin: parent.width * 2.5 / 100
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.width * 2.5 / 100
-        width: parent.width * 25 / 100
+        width: parent.width * 45 / 100
 
-        text: "Participate"
+        text: {
+            if(isParticipate){
+                return "Leave"
+            }else{
+                return "Participate"
+            }
+        }
+
         Material.foreground: "black"
         Material.elevation: 1
         highlighted: true
         font.bold: true
         font.pixelSize: fontSizeNormal
+
+        onClicked: {
+            if(isParticipate){
+                if(_database.deleteParticipation(infoGame["id"])){
+                    text = "Participate"
+                    isParticipate = false
+                }
+            }else{
+                if(_database.postParticipation(infoGame["id"])){
+                    text = "Leave"
+                    isParticipate = true
+                }
+            }
+            JS.getListOfPeople()
+        }
     }
 
 }
