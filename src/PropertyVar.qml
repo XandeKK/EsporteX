@@ -4,6 +4,6 @@ QtObject {
     property int sport_id
     property string nameSport
     property int game_id
-    property int organizer_id
+    property int people_id
     property bool changeUser: false
 }

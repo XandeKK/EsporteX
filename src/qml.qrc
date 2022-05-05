@@ -45,7 +45,6 @@
         <file>assets/Login.png</file>
         <file>assets/paper.png</file>
         <file>Window/SwipeHome/profile/SettingsProfile.qml</file>
-        <file>Window/SwipeHome/profile/Participation.qml</file>
         <file>assets/instagramProfile.png</file>
         <file>assets/twitterProfile.png</file>
         <file>Control/ToolBarBack.qml</file>
@@ -57,5 +56,6 @@
         <file>PropertyVar.qml</file>
         <file>qmldir</file>
         <file>Window/Game/EditGame.qml</file>
+        <file>Window/js/infoGame.js</file>
     </qresource>
 </RCC>
