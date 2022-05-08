@@ -113,7 +113,11 @@ Page {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: popup.open()
+            onClicked: {
+                if(!PropertyVar.isGuest){
+                    popup.open()
+                }
+            }
         }
     }
 
@@ -126,6 +130,8 @@ Page {
         anchors.rightMargin: parent.width * 2.5 / 100
         anchors.verticalCenter: imageProfie.verticalCenter
         spacing: 0
+
+        visible: !PropertyVar.isGuest
 
         Button {
             Layout.preferredWidth: parent.width / parent.total
@@ -153,12 +159,6 @@ Page {
             text: info["name"]
         }
 
-        Label {
-            font.pixelSize: fontSizeNormal
-            color: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
-            text: "@" + info["username"]
-        }
-
         Row {
             visible: {
                 (twitterItem || instagramItem)
@@ -175,6 +175,8 @@ Page {
                 Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
                 font.pixelSize: fontSizeNormal
                 text: "@" + info["twitter"]
+
+                onClicked: _desktopServices.twitter(info["twitter"])
             }
 
             ItemDelegate {
@@ -188,6 +190,8 @@ Page {
                 Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
                 font.pixelSize: fontSizeNormal
                 text: "@" + info["instagram"]
+
+                onClicked: _desktopServices.instagram(info["instagram"])
             }
         }
 
@@ -210,6 +214,9 @@ Page {
                 Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
                 font.pixelSize: fontSizeNormal
                 text: info["city"] + ", " + info["state"]
+
+                onClicked: _desktopServices.googleMap(info["city"])
+                visible: !PropertyVar.isGuest
             }
 
             Item {
@@ -220,6 +227,7 @@ Page {
                 Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
 
                 icon.source: "qrc:/assets/settings.png"
+                visible: !PropertyVar.isGuest
 
                 onClicked: {
                     stack.push("qrc:/Window/SwipeHome/profile/SettingsProfile.qml")

@@ -7,6 +7,7 @@ import "../../js/CreateAccount.js" as JS
 import "../../../"
 
 Page {
+    property bool name: false
     property var info: {
         JSON.parse(_database.getUser())
     }
@@ -99,6 +100,14 @@ Page {
                         fieldName.focus = false
                         fieldState.focus = true
                     }
+
+                    onEditingFinished: {
+                        if (text.length == 0){
+                            name = false
+                        }else{
+                            name = true
+                        }
+                    }
                 }
             }
 
@@ -108,7 +117,7 @@ Page {
                 spacing: parent.width * 3 / 100
 
                 Label {
-                    width: parent.width * 20 / 100
+                    width: parent.width * 15 / 100
                     height: parent.height
                     verticalAlignment: "AlignVCenter"
 
@@ -119,10 +128,8 @@ Page {
                 ComboBox {
                     id: comboBoxState
                     width: parent.width * 82 / 100
-                    model: JS.getStates() // Colocar no estado atual
+                    model: JS.getStates()
                     currentIndex: info["state_id"] - 1
-
-                    editable: true
 
                     font.pixelSize: fontSizeNormal
                 }
@@ -134,7 +141,7 @@ Page {
                 spacing: parent.width * 3 / 100
 
                 Label {
-                    width: parent.width * 20 / 100
+                    width: parent.width * 15 / 100
                     height: parent.height
                     verticalAlignment: "AlignVCenter"
 
@@ -145,10 +152,8 @@ Page {
                 ComboBox {
                     id: comboBoxCity
                     width: parent.width * 82 / 100
-                    model: JS.getCities(comboBoxState.currentIndex + 1) // Colocar na cidade atual
+                    model: JS.getCities(comboBoxState.currentIndex + 1)
                     currentIndex: info["city_id"] - 1
-
-                    editable: true
 
                     font.pixelSize: fontSizeNormal
                 }

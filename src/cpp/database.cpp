@@ -116,9 +116,9 @@ QByteArray Database::getStates()
     return document.toJson(QJsonDocument::Compact);
 }
 
-QByteArray Database::getCities(QString &idState)
+QByteArray Database::getCities(QString &state_id)
 {
-    QString uri = "http://10.0.0.22:3000/cities/" + idState;
+    QString uri = "http://10.0.0.22:3000/cities/0?state_id=" + state_id;
 
     QByteArray request = requestGet(uri);
 
@@ -140,7 +140,31 @@ QByteArray Database::getSports()
 
 QByteArray Database::getGames(QString &sport_id)
 {
-    QString uri = "http://10.0.0.22:3000/games/" + sport_id;
+    QString id = getUserId();
+
+    QSqlQuery query("SELECT state_id, city_id FROM user_address");
+    int state_id = query.record().indexOf("state_id");
+    int city_id = query.record().indexOf("city_id");
+    QString state;
+    QString city;
+
+    while (query.next()){
+        state = query.value(state_id).toString();
+        city = query.value(city_id).toString();
+    }
+
+    QString uri = "http://10.0.0.22:3000/games/0?sport_id=" + sport_id + "&user_id=" + id + "&state_id=" + state + "&city_id=" + city;
+
+    QByteArray request = requestGet(uri);
+
+    QJsonDocument document = QJsonDocument::fromJson(request);
+
+    return document.toJson(QJsonDocument::Compact);
+}
+
+QByteArray Database::getGamesGuest(QString &sport_id)
+{
+    QString uri = "http://10.0.0.22:3000/games?sport_id=" + sport_id;
 
     QByteArray request = requestGet(uri);
 
@@ -184,33 +208,34 @@ QByteArray Database::getInfoProfile(QString &user_id)
     return document.toJson(QJsonDocument::Compact);
 }
 
-bool Database::postUser(QString &name, QString &userName, QString &state_id, QString &city_id,
-                        QString &twitter, QString &instagram, QString &description, QString &state, QString &city, QString email)
+bool Database::postUser(QString &name, QString &state_id, QString &city_id,
+                        QString &twitter, QString &instagram, QString &description, QString &state,
+                        QString &city, QString &email, QString &password)
 {
     QString uri = "http://10.0.0.22:3000/users";
 
     QJsonObject obj;
     obj["name"] = name;
-    obj["username"] = userName;
     obj["email"] = email;
     obj["twitter"] = twitter;
     obj["instagram"] = instagram;
     obj["description"] = description;
     obj["image"] = image_profile;
+    obj["password"] = password;
 
     QByteArray request = requestPost(uri, obj);
 
     QJsonDocument document = QJsonDocument::fromJson(request);
 
-    int id = document.object()["id"].toInt();
-    QString id_s = QString::number(id);
+    QString id_s = QString::number(document.object()["id"].toInt());
+    int sucess = document.object()["sucess"].toInt();
 
-    if(id >= 1)
+    if(sucess == 1)
     {
         bool ok = postAddress(state_id, city_id, id_s);
         if(ok)
         {
-            insertUser(id_s, name, userName, email, twitter, instagram, description, state, city, state_id, city_id);
+            insertUser(id_s, name, email, twitter, instagram, description, state, city, state_id, city_id, image_profile);
             return true;
         }
     }
@@ -232,7 +257,8 @@ bool Database::putUser(QString &name, QString &twitter, QString &instagram, QStr
     QByteArray request = requestPut(uri, obj);
 
     QJsonDocument document = QJsonDocument::fromJson(request);
-    int documentValues = document.object()["id"].toInt();
+
+    int documentValues = document.object()["sucess"].toInt();
 
     if(documentValues >= 1){
         bool ok = putAddress(state_id, city_id, id);
@@ -268,6 +294,26 @@ void Database::putImage(QVariant var)
     query.bindValue(":id", id);
 
     query.exec();
+}
+
+bool Database::existsEmail(QString &email)
+{
+    QString uri = "http://10.0.0.22:3000/users?task=2";
+
+    QJsonObject obj;
+    obj["email"] = email;
+
+    QByteArray request = requestPost(uri, obj);
+
+    QJsonDocument document = QJsonDocument::fromJson(request);
+
+    int sucess = document.object()["exists"].toInt();
+
+    if(sucess == 1)
+    {
+        return true;
+    }
+    return false;
 }
 
 void Database::deleteImage()
@@ -385,6 +431,40 @@ QByteArray Database::putGame(QString &game_id, QString &sport_id, QString &state
     return document.toJson(QJsonDocument::Compact);
 }
 
+bool Database::getLogin(QString &email, QString &password)
+{
+    QString uri = "http://10.0.0.22:3000/users?task=1";
+
+    QJsonObject obj;
+    obj["email"] = email;
+    obj["password"] = password;
+
+    QByteArray request = requestPost(uri, obj);
+
+    QJsonDocument document = QJsonDocument::fromJson(request);
+
+    int sucess = document.object()["sucess"].toInt();
+    QString user_id = QString::number(document.object()["user_id"].toInt());
+    QString name = document.object()["name"].toString();
+    QString image = document.object()["image"].toString();
+    QString twitter = document.object()["twitter"].toString();
+    QString instagram = document.object()["instagram"].toString();
+    QString description = document.object()["description"].toString();
+    QString state = document.object()["state"].toString();
+    QString state_id = QString::number(document.object()["state_id"].toInt());
+    QString city = document.object()["city"].toString();
+    QString city_id = QString::number(document.object()["city_id"].toInt());
+    email = document.object()["email"].toString();
+    this->address_id = document.object()["address_id"].toInt();
+
+    if(sucess == 1){
+        insertUser(user_id, name, email, twitter, instagram, description, state, city, state_id, city_id, image);
+        return true;
+    }
+
+    return false;
+}
+
 bool Database::deleteGame(QString &game_id)
 {
     QString uri = "http://10.0.0.22:3000/games/" + game_id;
@@ -392,7 +472,6 @@ bool Database::deleteGame(QString &game_id)
     QByteArray request = requestDelete(uri);
 
     QJsonDocument document = QJsonDocument::fromJson(request);
-    qDebug() << document;
     int documentValues = document.object()["sucess"].toInt();
 
     if(documentValues >= 1){
@@ -496,26 +575,26 @@ void Database::dropAndCreateTables()
 {
     QSqlQuery query;
     query.exec("DROP TABLE IF EXISTS user");
-    query.exec("CREATE TABLE user(id int, name VARCHAR(50), username VARCHAR(50),"
+    query.exec("CREATE TABLE user(id int, name VARCHAR(50),"
                "email VARCHAR(100), twitter VARCHAR(255), instagram VARCHAR(255), description TEXT, image TEXT)");
 
     query.exec("DROP TABLE IF EXISTS user_address");
     query.exec("CREATE TABLE user_address(id int, state_id INT, city_id INT, city VARCHAR(50) NOT NULL, state VARCHAR(50) not null)");
 }
 
-void Database::insertUser(QString &user_id, QString &name, QString &username, QString &email, QString &twitter,
-                          QString &instagram, QString &description, QString &state, QString &city, QString &state_id, QString &city_id)
+void Database::insertUser(QString &user_id, QString &name, QString &email, QString &twitter,
+                          QString &instagram, QString &description, QString &state, QString &city, QString &state_id,
+                          QString &city_id, QString &image)
 {
     QSqlQuery query;
-    query.prepare("INSERT INTO user VALUES (:user_id, :name, :username, :email, :twitter, :instagram, :description, :image)");
+    query.prepare("INSERT INTO user VALUES (:user_id, :name, :email, :twitter, :instagram, :description, :image)");
     query.bindValue(":user_id", user_id);
     query.bindValue(":name", name);
-    query.bindValue(":username", username);
     query.bindValue(":email", email);
     query.bindValue(":twitter", twitter);
     query.bindValue(":instagram", instagram);
     query.bindValue(":description", description);
-    query.bindValue(":image", image_profile);
+    query.bindValue(":image", image);
 
     query.exec();
 
@@ -565,7 +644,6 @@ QString Database::getUser()
     QSqlQuery query("SELECT * FROM user");
     int user_id = query.record().indexOf("id");
     int name_id = query.record().indexOf("name");
-    int username_id = query.record().indexOf("username");
     int twitter_id = query.record().indexOf("twitter");
     int instagram_id = query.record().indexOf("instagram");
     int description_id = query.record().indexOf("description");
@@ -576,7 +654,6 @@ QString Database::getUser()
     while (query.next()){
         mainObject.insert("id", query.value(user_id).toString());
         mainObject.insert("name", query.value(name_id).toString());
-        mainObject.insert("username", query.value(username_id).toString());
         mainObject.insert("twitter", query.value(twitter_id).toString());
         mainObject.insert("instagram", query.value(instagram_id).toString());
         mainObject.insert("description", query.value(description_id).toString());
@@ -615,4 +692,40 @@ QString Database::getUserId()
     return id;
 }
 
+void Database::enterAsGuest()
+{
+    QString user_id = "";
+    QString name = "Guest";
+    QString email = "Guest";
+    QString twitter = "";
+    QString instagram = "";
+    QString description = "Hi, i'm a Guest";
+    QString state = "unknow";
+    QString city = "unknow";
+    QString state_id = "unknow";
+    QString city_id = "unknow";
+    QString image = image_profile;
+    insertUser(user_id, name, email, twitter, instagram, description, state, city, state_id, city_id, image);
+}
+
+void Database::logout()
+{
+    dropAndCreateTables();
+}
+
+bool Database::isConected()
+{
+    QSqlQuery query("SELECT id FROM user");
+    int user_id = query.record().indexOf("id");
+    int id;
+
+    while (query.next()){
+        id = query.value(user_id).toInt();
+    }
+
+    if (id >= 1){
+        return true;
+    }
+    return false;
+}
 

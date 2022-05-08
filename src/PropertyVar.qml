@@ -6,4 +6,5 @@ QtObject {
     property int game_id
     property int people_id
     property bool changeUser: false
+    property bool isGuest: false
 }

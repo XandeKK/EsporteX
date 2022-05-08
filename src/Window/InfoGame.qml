@@ -257,7 +257,7 @@ Page {
                         }
                         ItemDelegate {
                             anchors.fill: parent
-                            onClicked: console.log("OOOS")
+                            onClicked: _desktopServices.googleMap(infoGame["address"]) // Colocar a cidade e o estado
                         }
                     }
                 }
@@ -411,6 +411,8 @@ Page {
                 return "Participate"
             }
         }
+
+        visible: !PropertyVar.isGuest
 
         Material.foreground: "black"
         Material.elevation: 1

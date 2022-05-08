@@ -35,6 +35,7 @@ Page {
             onAccepted: {
                 drawer.close()
                 dialog.close()
+                _database.logout()
                 stack.pop(null)
                 stack.push("qrc:/Window/Login.qml")
             }
@@ -106,7 +107,7 @@ Page {
         currentIndex: tabBar.currentIndex
 
         Loader {
-            sourceComponent: ListGame {}
+            sourceComponent: ListSport {}
         }
 
         Loader {

@@ -13,7 +13,13 @@ Page {
 
         model: ListModel {
             id: listModelGames
-            Component.onCompleted: Sport.getGames(PropertyVar.sport_id)
+            Component.onCompleted: {
+                if(!PropertyVar.isGuest){
+                    Sport.getGames(PropertyVar.sport_id)
+                }else{
+                    Sport.getGameGuest(PropertyVar.sport_id)
+                }
+            }
         }
 
         header: Item {

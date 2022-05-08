@@ -1,8 +1,9 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
-import "js/ListGame.js" as JS
+import "js/listSport.js" as JS
 import "../../"
+
 
 Page {
     GridView {
@@ -79,6 +80,7 @@ Page {
         anchors.rightMargin: parent.width * 2.5 / 100
 
         highlighted: true
+        visible: !PropertyVar.isGuest
 
         icon.source: "qrc:/assets/add.png"
         icon.color: "black"

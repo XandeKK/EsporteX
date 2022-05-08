@@ -66,13 +66,6 @@ Page {
             text: infoProfile["name"]
         }
 
-        Label {
-            id: labelUserName
-            font.pixelSize: fontSizeNormal
-            color: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
-            text: "@" + infoProfile["username"]
-        }
-
         Row {
             visible: {
                 (twitterItem || instagramItem)
@@ -89,6 +82,8 @@ Page {
                 Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
                 font.pixelSize: fontSizeNormal
                 text: "@" + infoProfile["twitter"]
+
+                onClicked: _desktopServices.twitter(infoProfile["twitter"])
             }
 
             ItemDelegate {
@@ -102,6 +97,8 @@ Page {
                 Material.foreground: Material.theme === Material.Dark ? "#88ffffff" : "#88000000"
                 font.pixelSize: fontSizeNormal
                 text: "@" + infoProfile["instagram"]
+
+                onClicked: _desktopServices.instagram(infoProfile["instagram"])
             }
         }
 
@@ -127,6 +124,8 @@ Page {
 
                 font.pixelSize: fontSizeNormal
                 text: infoProfile["city"]["city"] + ", " + infoProfile["state"]["state"]
+
+                onClicked: _desktopServices.googleMap(infoProfile["city"]["city"])
             }
 
             Item {

@@ -8,6 +8,9 @@ import "../Control/"
 import "../"
 
 Page {
+    property var info: {
+        JSON.parse(_database.getUser())
+    }
     Dialog {
         id: dialog
         anchors.centerIn: parent
@@ -35,7 +38,6 @@ Page {
             }
 
             onAccepted: {
-                dialog.close()
                 let json = _database.postGame(comboBoxSport.currentIndex + 1,
                                               comboBoxState.currentIndex + 1,
                                               comboBoxCity.currentIndex + 1,
@@ -47,8 +49,9 @@ Page {
                         )
                 json = JSON.parse(json)
                 PropertyVar.game_id = json["id"]
-                stack.pop(null)
-                stack.push("qrc:/Window/InfoGame.qml")
+                dialog.close()
+//                stack.pop(null)
+                stack.replace("qrc:/Window/InfoGame.qml")
             }
 
             onRejected: dialog.close()
@@ -120,6 +123,7 @@ Page {
                     id: comboBoxState
                     width: parent.width * 82 / 100
                     model: FuncAddress.getStates()
+                    currentIndex: info["state_id"] - 1
 
                     font.pixelSize: fontSizeNormal
                 }
@@ -144,9 +148,16 @@ Page {
                     id: comboBoxCity
                     width: parent.width * 82 / 100
                     model: FuncAddress.getCities(comboBoxState.currentIndex + 1)
+                    currentIndex: info["city_id"] - 1
 
                     font.pixelSize: fontSizeNormal
                 }
+            }
+
+            Label {
+                id: labelWarningAddress
+                text: "The address cannot be empty!"
+                visible: false
             }
 
             Row {
@@ -170,12 +181,25 @@ Page {
                     font.pixelSize: fontSizeNormal
                     placeholderText: "Address"
 
+                    onEditingFinished: {
+                        if(text == ""){
+                            labelWarningAddress.visible = true
+                        }else{
+                            labelWarningAddress.visible = false
+                        }
+                    }
+
                     Keys.onReturnPressed: {
                         fieldAddress.focus = false
                         fieldStart.focus = true
                     }
                 }
+            }
 
+            Label {
+                id: labelWarningStart
+                text: "The start time is wrong!"
+                visible: false
             }
 
             Row {
@@ -200,7 +224,7 @@ Page {
                     placeholderText: "Start Game Ex.: 10:00"
 
                     inputMethodHints: Qt.ImhDigitsOnly
-                    onEditingFinished: console.log(FuncCreateGame.isValidTime(text))
+                    onEditingFinished: labelWarningStart.visible = !FuncCreateGame.isValidTime(text)
 
                     Keys.onReturnPressed: {
                         fieldStart.focus = false
@@ -212,6 +236,12 @@ Page {
                         cursorPosition = 0
                     }
                 }
+            }
+
+            Label {
+                id: labelWarningEnd
+                text: "The end time is wrong!"
+                visible: false
             }
 
             Row {
@@ -236,7 +266,7 @@ Page {
                     placeholderText: "End Game Ex.: 13:00"
 
                     inputMethodHints: Qt.ImhDigitsOnly
-                    onEditingFinished: console.log(FuncCreateGame.isValidTime(text))
+                    onEditingFinished: labelWarningEnd.visible = !FuncCreateGame.isValidTime(text)
 
                     Keys.onReturnPressed: {
                         fieldEnd.focus = false
@@ -248,6 +278,12 @@ Page {
                         cursorPosition = 0
                     }
                 }
+            }
+
+            Label {
+                id: labelWarningDate
+                text: "The date is wrong!"
+                visible: false
             }
 
             Row {
@@ -265,14 +301,20 @@ Page {
                 }
 
                 TextField {
+                    property string dateNow: {
+                        const d = new Date();
+                        return ('0' + d.getDate()).slice(-2) + "/" + ('0' + d.getMonth()).slice(-2) + "/" + d.getFullYear()
+                    }
+
                     id: fieldDate
                     width: parent.width * 45 / 100
 
                     font.pixelSize: fontSizeNormal
                     placeholderText: "Date Ex.: 10/10/2010"
+                    text: dateNow
 
                     inputMethodHints: Qt.ImhDigitsOnly
-                    onEditingFinished: console.log(FuncCreateGame.isValidDate(text))
+                    onEditingFinished: labelWarningDate.visible = !FuncCreateGame.isValidDate(text)
 
                     Keys.onReturnPressed: {
                         fieldDate.focus = false
@@ -308,9 +350,6 @@ Page {
                     font.pixelSize: fontSizeNormal
                     placeholderText: "Put here description of game"
 
-                    Keys.onReturnPressed: {
-                        fieldDescription.focus = false
-                    }
                     onFocusChanged: {
                         if(focus){
                             flickable.contentY = columnRoot.height * 50 / 100

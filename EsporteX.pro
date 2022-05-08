@@ -7,7 +7,8 @@ QT += widgets
 
 SOURCES += \
         main.cpp \
-        src/cpp/database.cpp
+        src/cpp/database.cpp \
+        src/cpp/desktopservices.cpp
 
 resources.prefix = /$${TARGET}
 RESOURCES += src/qml.qrc
@@ -39,4 +40,5 @@ contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
 }
 
 HEADERS += \
-    src/cpp/database.h
+    src/cpp/database.h \
+    src/cpp/desktopservices.h

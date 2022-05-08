@@ -13,14 +13,11 @@
         <file>assets/logout.png</file>
         <file>assets/settings.png</file>
         <file>assets/backArrow.png</file>
-        <file>Window/SwipeHome/ListGame.qml</file>
+        <file>Window/SwipeHome/ListSport.qml</file>
         <file>Window/SwipeHome/Profile.qml</file>
         <file>assets/add.png</file>
         <file>Window/Login.qml</file>
-        <file>assets/facebook.png</file>
-        <file>assets/google.png</file>
-        <file>assets/twitter.png</file>
-        <file>Window/SwipeSport/SportList.qml</file>
+        <file>Window/SwipeSport/ListGame.qml</file>
         <file>assets/mark.png</file>
         <file>assets/calendar.png</file>
         <file>assets/time.svg</file>
@@ -33,7 +30,7 @@
         <file>assets/profileDark.png</file>
         <file>assets/timeDark.png</file>
         <file>Window/SwipeGames.qml</file>
-        <file>Window/SwipeSport/SportCreateByYou.qml</file>
+        <file>Window/SwipeSport/GameCreateByYou.qml</file>
         <file>Window/InsertLocale.qml</file>
         <file>Window/js/CreateGame.js</file>
         <file>Window/InfoProfile.qml</file>
@@ -41,7 +38,6 @@
         <file>assets/Logo.png</file>
         <file>assets/Marca.png</file>
         <file>qtquickcontrols2.conf</file>
-        <file>assets/FrameSocial.png</file>
         <file>assets/Login.png</file>
         <file>assets/paper.png</file>
         <file>Window/SwipeHome/profile/SettingsProfile.qml</file>
@@ -51,11 +47,15 @@
         <file>Control/Separator.qml</file>
         <file>Window/CreateAccount.qml</file>
         <file>Window/js/CreateAccount.js</file>
-        <file>Window/SwipeHome/js/ListGame.js</file>
+        <file>Window/SwipeHome/js/listSport.js</file>
         <file>Window/SwipeSport/js/Sport.js</file>
         <file>PropertyVar.qml</file>
         <file>qmldir</file>
         <file>Window/Game/EditGame.qml</file>
         <file>Window/js/infoGame.js</file>
+        <file>assets/eyeclosed.png</file>
+        <file>assets/eyeclosedDark.png</file>
+        <file>assets/eyeopen.png</file>
+        <file>assets/eyeopenDark.png</file>
     </qresource>
 </RCC>

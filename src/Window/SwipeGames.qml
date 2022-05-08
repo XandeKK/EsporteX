@@ -41,11 +41,11 @@ Page {
         currentIndex: tabBarSport.currentIndex
 
         Loader {
-            sourceComponent: SportList {}
+            sourceComponent: ListGame {}
         }
 
         Loader {
-            sourceComponent: SportCreateByYou {}
+            sourceComponent: GameCreateByYou {}
         }
     }
 
@@ -59,6 +59,8 @@ Page {
         anchors.rightMargin: parent.width * 2.5 / 100
         Material.elevation: 1
         z: 1
+
+        visible: !PropertyVar.isGuest
 
         highlighted: true
 

@@ -5,8 +5,12 @@ import QtQuick.Layouts 1.15
 import "../Control/"
 import "js/CreateAccount.js" as JS
 
+
 Page {
-    Component.onCompleted: _database.dropAndCreateTables()
+    property bool name: false
+    property bool email: false
+    property bool password: false
+
     Dialog {
         id: dialog
         anchors.centerIn: parent
@@ -34,23 +38,29 @@ Page {
             }
 
             onAccepted: {
+                _database.dropAndCreateTables()
                 dialog.close()
                 _database.postUser(
                             fieldName.text,
-                            fieldUserName.text,
                             comboBoxState.currentIndex + 1,
                             comboBoxCity.currentIndex + 1,
                             fieldTwitter.text,
                             fieldInstagram.text,
                             fieldDescription.text,
                             comboBoxState.currentText,
-                            comboBoxCity.currentText
+                            comboBoxCity.currentText,
+                            fieldEmail.text,
+                            fieldPassword.text
                             )
                 stack.replace("qrc:/Window/Home.qml")
             }
 
             onRejected: dialog.close()
         }
+    }
+
+    header: ToolBarBack {
+        labelToolBar: "Sign up"
     }
 
     Item {
@@ -88,21 +98,41 @@ Page {
 
                 TextField {
                     id: fieldName
-                    width: parent.width * 82 / 100
+                    width: parent.width * 77 / 100
 
                     font.pixelSize: fontSizeNormal
                     placeholderText: "Name"
 
+                    onEditingFinished: {
+                        if (text.length == 0){
+                            name = false
+                        }else{
+                            name = true
+                        }
+                    }
+
                     Keys.onReturnPressed: {
                         fieldName.focus = false
-                        fieldUserName.focus = true
+                        fieldEmail.focus = true
                     }
                 }
 
             }
 
+            Label {
+                id: labelWarningEmail
+                text: "The email is wrong"
+                visible: false
+            }
+
+            Label {
+                id: labelExistEmail
+                text: "The email Exist"
+                visible: false
+            }
+
             Row {
-                id: rowUserName
+                id: rowEmail
                 width: parent.width
                 spacing: parent.width * 3 / 100
 
@@ -112,19 +142,127 @@ Page {
                     verticalAlignment: "AlignVCenter"
 
                     font.pixelSize: fontSizeNormal
-                    text: "UserName:"
+                    text: "Email:"
                 }
 
                 TextField {
-                    id: fieldUserName
-                    width: parent.width * 82 / 100
+                    id: fieldEmail
+                    width: parent.width * 77 / 100
                     font.pixelSize: fontSizeNormal
 
-                    placeholderText: "UserName"
+                    placeholderText: "Email"
 
                     Keys.onReturnPressed: {
-                        fieldUserName.focus = false
-                        fieldTwitter.focus = true
+                        fieldEmail.focus = false
+                        fieldPassword.focus = true
+                    }
+                    onEditingFinished: {
+                        labelWarningEmail.visible = !JS.isValidEmail(fieldEmail.text)
+                        labelExistEmail.visible = _database.existsEmail(fieldEmail.text)
+                        if ( !labelWarningEmail.visible && !labelExistEmail.visible ) {
+                            email = true
+                        }else {
+                            email = false
+                        }
+                    }
+                }
+            }
+
+            Label {
+                id: labelWarningPassword
+                text: "Warning!\nThe password not equal"
+                visible: false
+            }
+
+            Row {
+                id: rowPassword
+                width: parent.width
+                spacing: parent.width * 3 / 100
+
+                Label {
+                    width: parent.width * 20 / 100
+                    height: parent.height
+                    verticalAlignment: "AlignVCenter"
+
+                    font.pixelSize: fontSizeNormal
+                    text: "Password:"
+                }
+
+                TextField {
+                    property bool visiblePassword: false
+                    id: fieldPassword
+                    width: parent.width * 77 / 100
+                    font.pixelSize: fontSizeNormal
+
+                    placeholderText: "Password"
+                    echoMode: visiblePassword ? TextInput.Normal : TextInput.Password
+
+                    Keys.onReturnPressed: {
+                        fieldPassword.focus = false
+                        fieldConfirmPassword.focus = true
+                    }
+
+                    passwordCharacter: "*"
+
+                    onEditingFinished: {
+                        if(fieldPassword.text == fieldConfirmPassword.text){
+                            labelWarningPassword.visible = false
+                            password = true
+                        }else{
+                            labelWarningPassword.visible = true
+                            password = false
+                        }
+                    }
+
+                    Image {
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        height: parent.height * 80 / 100
+                        width: height
+                        source: fieldPassword.visiblePassword ? "qrc:/assets/eyeopen.png" : "qrc:/assets/eyeclosed.png"
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: fieldPassword.visiblePassword = !fieldPassword.visiblePassword
+                        }
+                    }
+                }
+            }
+
+            Row {
+                id: rowConfirmPassword
+                width: parent.width
+                spacing: parent.width * 3 / 100
+
+                Label {
+                    width: parent.width * 20 / 100
+                    height: parent.height
+                    verticalAlignment: "AlignVCenter"
+
+                    font.pixelSize: fontSizeNormal
+                    text: "C. Password:"
+                }
+
+                TextField {
+                    id: fieldConfirmPassword
+                    width: parent.width * 77 / 100
+                    font.pixelSize: fontSizeNormal
+
+                    placeholderText: "Confirm Password"
+                    echoMode: fieldPassword.visiblePassword ? TextInput.Normal : TextInput.Password
+
+                    Keys.onReturnPressed: {
+                        fieldConfirmPassword.focus = false
+                    }
+                    passwordCharacter: "*"
+
+                    onEditingFinished: {
+                        if(fieldPassword.text == fieldConfirmPassword.text){
+                            labelWarningPassword.visible = false
+                            password = true
+                        }else{
+                            labelWarningPassword.visible = true
+                            password = false
+                        }
                     }
                 }
             }
@@ -145,14 +283,12 @@ Page {
 
                 ComboBox {
                     id: comboBoxState
-                    width: parent.width * 82 / 100
+                    width: parent.width * 77 / 100
                     model: JS.getStates()
 
-                    editable: true
-
                     font.pixelSize: fontSizeNormal
-                }
 
+                }
             }
 
             Row {
@@ -171,10 +307,8 @@ Page {
 
                 ComboBox {
                     id: comboBoxCity
-                    width: parent.width * 82 / 100
+                    width: parent.width * 77 / 100
                     model: JS.getCities(comboBoxState.currentIndex + 1)
-
-                    editable: true
 
                     font.pixelSize: fontSizeNormal
                 }
@@ -197,7 +331,7 @@ Page {
 
                 TextField {
                     id: fieldTwitter
-                    width: parent.width * 82 / 100
+                    width: parent.width * 77 / 100
 
                     font.pixelSize: fontSizeNormal
                     placeholderText: "Twitter"
@@ -226,7 +360,7 @@ Page {
 
                 TextField {
                     id: fieldInstagram
-                    width: parent.width * 82 / 100
+                    width: parent.width * 77 / 100
 
                     font.pixelSize: fontSizeNormal
                     placeholderText: "Instagram"
@@ -259,11 +393,8 @@ Page {
                     wrapMode: "WordWrap"
 
                     font.pixelSize: fontSizeNormal
-                    placeholderText: "Put here description about you"
+                    placeholderText: "Put here description about you."
 
-                    Keys.onReturnPressed: {
-                        fieldDescription.focus = false
-                    }
                     onFocusChanged: {
                         if(focus){
                             flickable.contentY = columnRoot.height * 50 / 100
@@ -289,6 +420,10 @@ Page {
         font.pixelSize: fontSizeNormal
         text: "Ok"
 
-        onClicked: dialog.open()
+        onClicked: {
+            if (name && email && password){
+                dialog.open()
+            }
+        }
     }
 }

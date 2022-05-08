@@ -18,17 +18,17 @@ public:
     QByteArray requestDelete(QString &uri);
 
     Q_INVOKABLE QByteArray getStates();
-    Q_INVOKABLE QByteArray getCities(QString &state);
+    Q_INVOKABLE QByteArray getCities(QString &state_id);
 
     Q_INVOKABLE QByteArray getSports();
 
     Q_INVOKABLE QByteArray getGames(QString &sport_id);
+    Q_INVOKABLE QByteArray getGamesGuest(QString &sport_id);
     Q_INVOKABLE QByteArray getGamesUser();
     Q_INVOKABLE QByteArray getInfoGame(QString &game_id);
     Q_INVOKABLE QByteArray getInfoProfile(QString &user_id);
 
     Q_INVOKABLE bool postUser(QString &name,
-                              QString &userName,
                               QString &state_id,
                               QString &city_id,
                               QString &twitter,
@@ -36,7 +36,8 @@ public:
                               QString &description,
                               QString &state,
                               QString &city,
-                              QString email = ""
+                              QString &email,
+                              QString &password
             );
     Q_INVOKABLE bool putUser(QString &name,
                              QString &twitter,
@@ -48,6 +49,8 @@ public:
                              QString &city_id);
 
     Q_INVOKABLE void putImage(QVariant var);
+
+    Q_INVOKABLE bool existsEmail(QString &email);
 
     Q_INVOKABLE void deleteImage();
 
@@ -79,6 +82,8 @@ public:
                                    QString &start,
                                    QString &end);
 
+    Q_INVOKABLE bool getLogin(QString &email, QString &password);
+
     Q_INVOKABLE bool deleteGame(QString &game_id);
 
     Q_INVOKABLE bool isParticipate(QString &game_id);
@@ -96,7 +101,6 @@ public:
 
     void insertUser(QString &user_id,
                     QString &name,
-                    QString &username,
                     QString &email,
                     QString &twitter,
                     QString &instagram,
@@ -104,7 +108,8 @@ public:
                     QString &state,
                     QString &city,
                     QString &state_id,
-                    QString &city_id);
+                    QString &city_id,
+                    QString &image);
 
     void updateUser(QString &name,
                     QString &twitter,
@@ -114,9 +119,16 @@ public:
                     QString &city,
                     QString &state_id,
                     QString &city_id);
+
     Q_INVOKABLE QString getUser();
 
     Q_INVOKABLE QString getUserId();
+
+    Q_INVOKABLE void enterAsGuest();
+
+    Q_INVOKABLE void logout();
+
+    Q_INVOKABLE bool isConected();
 
 private:
     QSqlDatabase m_db;

@@ -24,7 +24,13 @@ ApplicationWindow {
     StackView {
         id: stack
         anchors.fill: parent
-        initialItem: "qrc:/Window/Login.qml"
+        initialItem: {
+            if (_database.isConected()){
+                "qrc:/Window/Home.qml"
+            }else{
+                "qrc:/Window/Login.qml"
+            }
+        }
 
         pushEnter: Transition {
             PropertyAnimation {
