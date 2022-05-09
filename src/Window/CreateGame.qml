@@ -38,9 +38,9 @@ Page {
             }
 
             onAccepted: {
-                let json = _database.postGame(comboBoxSport.currentIndex + 1,
-                                              comboBoxState.currentIndex + 1,
-                                              comboBoxCity.currentIndex + 1,
+                let json = _database.postGame(PropertyVar.sportsArray[comboBoxSport.currentIndex],
+                                              PropertyVar.statesArray[comboBoxState.currentIndex],
+                                              PropertyVar.citiesArray[comboBoxCity.currentIndex],
                                               fieldAddress.text,
                                               fieldDate.text,
                                               fieldDescription.text,
@@ -123,7 +123,6 @@ Page {
                     id: comboBoxState
                     width: parent.width * 82 / 100
                     model: FuncAddress.getStates()
-                    currentIndex: info["state_id"] - 1
 
                     font.pixelSize: fontSizeNormal
                 }
@@ -147,8 +146,7 @@ Page {
                 ComboBox {
                     id: comboBoxCity
                     width: parent.width * 82 / 100
-                    model: FuncAddress.getCities(comboBoxState.currentIndex + 1)
-                    currentIndex: info["city_id"] - 1
+                    model: FuncAddress.getCities(PropertyVar.statesArray[comboBoxState.currentIndex])
 
                     font.pixelSize: fontSizeNormal
                 }

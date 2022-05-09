@@ -107,7 +107,7 @@ QByteArray Database::requestDelete(QString &uri)
 
 QByteArray Database::getStates()
 {
-    QString uri = "http://10.0.0.22:3000/states";
+    QString uri = "https://esportex.herokuapp.com/states";
 
     QByteArray request = requestGet(uri);
 
@@ -118,7 +118,7 @@ QByteArray Database::getStates()
 
 QByteArray Database::getCities(QString &state_id)
 {
-    QString uri = "http://10.0.0.22:3000/cities/0?state_id=" + state_id;
+    QString uri = "https://esportex.herokuapp.com/cities/0?state_id=" + state_id;
 
     QByteArray request = requestGet(uri);
 
@@ -129,7 +129,7 @@ QByteArray Database::getCities(QString &state_id)
 
 QByteArray Database::getSports()
 {
-    QString uri = "http://10.0.0.22:3000/sports";
+    QString uri = "https://esportex.herokuapp.com/sports";
 
     QByteArray request = requestGet(uri);
 
@@ -153,7 +153,7 @@ QByteArray Database::getGames(QString &sport_id)
         city = query.value(city_id).toString();
     }
 
-    QString uri = "http://10.0.0.22:3000/games/0?sport_id=" + sport_id + "&user_id=" + id + "&state_id=" + state + "&city_id=" + city;
+    QString uri = "https://esportex.herokuapp.com/games/0?sport_id=" + sport_id + "&user_id=" + id + "&state_id=" + state + "&city_id=" + city;
 
     QByteArray request = requestGet(uri);
 
@@ -164,7 +164,7 @@ QByteArray Database::getGames(QString &sport_id)
 
 QByteArray Database::getGamesGuest(QString &sport_id)
 {
-    QString uri = "http://10.0.0.22:3000/games?sport_id=" + sport_id;
+    QString uri = "https://esportex.herokuapp.com/games?sport_id=" + sport_id;
 
     QByteArray request = requestGet(uri);
 
@@ -177,7 +177,7 @@ QByteArray Database::getGamesUser()
 {
     QString id = getUserId();
 
-    QString uri = "http://10.0.0.22:3000/game_user/" + id;
+    QString uri = "https://esportex.herokuapp.com/game_user/" + id;
 
     QByteArray request = requestGet(uri);
 
@@ -188,7 +188,7 @@ QByteArray Database::getGamesUser()
 
 QByteArray Database::getInfoGame(QString &game_id)
 {
-    QString uri = "http://10.0.0.22:3000/info_game/" + game_id;
+    QString uri = "https://esportex.herokuapp.com/info_game/" + game_id;
 
     QByteArray request = requestGet(uri);
 
@@ -199,7 +199,7 @@ QByteArray Database::getInfoGame(QString &game_id)
 
 QByteArray Database::getInfoProfile(QString &user_id)
 {
-    QString uri = "http://10.0.0.22:3000/info_profile/" + user_id;
+    QString uri = "https://esportex.herokuapp.com/info_profile/" + user_id;
 
     QByteArray request = requestGet(uri);
 
@@ -212,7 +212,7 @@ bool Database::postUser(QString &name, QString &state_id, QString &city_id,
                         QString &twitter, QString &instagram, QString &description, QString &state,
                         QString &city, QString &email, QString &password)
 {
-    QString uri = "http://10.0.0.22:3000/users";
+    QString uri = "https://esportex.herokuapp.com/users";
 
     QJsonObject obj;
     obj["name"] = name;
@@ -246,7 +246,7 @@ bool Database::putUser(QString &name, QString &twitter, QString &instagram, QStr
 {
     QString id = getUserId();
 
-    QString uri = "http://10.0.0.22:3000/users/" + id;
+    QString uri = "https://esportex.herokuapp.com/users/" + id;
 
     QJsonObject obj;
     obj["name"] = name;
@@ -283,7 +283,7 @@ void Database::putImage(QVariant var)
     QImage img = qvariant_cast<QImage>(var);
     img.save(&bu, "JPG");
 
-    QString uri = "http://10.0.0.22:3000/users/" + id;
+    QString uri = "https://esportex.herokuapp.com/users/" + id;
     QJsonObject obj;
     obj["image"] = QString(ba.toBase64());
 
@@ -298,7 +298,7 @@ void Database::putImage(QVariant var)
 
 bool Database::existsEmail(QString &email)
 {
-    QString uri = "http://10.0.0.22:3000/users?task=2";
+    QString uri = "https://esportex.herokuapp.com/users?task=2";
 
     QJsonObject obj;
     obj["email"] = email;
@@ -322,7 +322,7 @@ void Database::deleteImage()
 
     QString id = getUserId();
 
-    QString uri = "http://10.0.0.22:3000/users/" + id;
+    QString uri = "https://esportex.herokuapp.com/users/" + id;
     QJsonObject obj;
     obj["image"] = image_profile;
 
@@ -337,7 +337,7 @@ void Database::deleteImage()
 
 bool Database::postAddress(QString &state_id, QString &city_id, QString &user_id)
 {
-    QString uri = "http://10.0.0.22:3000/user_adresses";
+    QString uri = "https://esportex.herokuapp.com/user_addresses";
 
     QJsonObject obj;
     obj["state_id"] = state_id;
@@ -366,7 +366,7 @@ bool Database::putAddress(QString &state_id, QString &city_id, QString &user_id)
         id = query.value(user_address_id).toString();
     }
 
-    QString uri = "http://10.0.0.22:3000/user_adresses/" + id;
+    QString uri = "https://esportex.herokuapp.com/user_addresses/" + id;
 
     QJsonObject obj;
     obj["state_id"] = state_id;
@@ -388,7 +388,7 @@ bool Database::putAddress(QString &state_id, QString &city_id, QString &user_id)
 QByteArray Database::postGame(QString &sport_id, QString &state_id, QString &city_id,
                               QString &address, QString &date, QString &description, QString &start, QString &end)
 {
-    QString uri = "http://10.0.0.22:3000/games";
+    QString uri = "https://esportex.herokuapp.com/games";
 
     QString id = getUserId();
 
@@ -412,7 +412,7 @@ QByteArray Database::postGame(QString &sport_id, QString &state_id, QString &cit
 
 QByteArray Database::putGame(QString &game_id, QString &sport_id, QString &state_id, QString &city_id, QString &address, QString &date, QString &description, QString &start, QString &end)
 {
-    QString uri = "http://10.0.0.22:3000/games/" + game_id;
+    QString uri = "https://esportex.herokuapp.com/games/" + game_id;
 
     QJsonObject obj;
     obj["sport_id"] = sport_id;
@@ -433,7 +433,7 @@ QByteArray Database::putGame(QString &game_id, QString &sport_id, QString &state
 
 bool Database::getLogin(QString &email, QString &password)
 {
-    QString uri = "http://10.0.0.22:3000/users?task=1";
+    QString uri = "https://esportex.herokuapp.com/users?task=1";
 
     QJsonObject obj;
     obj["email"] = email;
@@ -467,7 +467,7 @@ bool Database::getLogin(QString &email, QString &password)
 
 bool Database::deleteGame(QString &game_id)
 {
-    QString uri = "http://10.0.0.22:3000/games/" + game_id;
+    QString uri = "https://esportex.herokuapp.com/games/" + game_id;
 
     QByteArray request = requestDelete(uri);
 
@@ -484,7 +484,7 @@ bool Database::isParticipate(QString &game_id)
 {
     QString id = getUserId();
 
-    QString uri = "http://10.0.0.22:3000/participations/" + game_id + "?user_id=" + id + "&task=1";
+    QString uri = "https://esportex.herokuapp.com/participations/" + game_id + "?user_id=" + id + "&task=1";
 
     QByteArray request = requestGet(uri);
 
@@ -499,7 +499,7 @@ bool Database::isParticipate(QString &game_id)
 
 bool Database::postParticipation(QString &game_id)
 {
-    QString uri = "http://10.0.0.22:3000/participations";
+    QString uri = "https://esportex.herokuapp.com/participations";
 
     QString id = getUserId();
 
@@ -523,7 +523,7 @@ bool Database::deleteParticipation(QString &game_id)
 {
     QString id = getUserId();
 
-    QString uri = "http://10.0.0.22:3000/participations/" + game_id + "?user_id=" + id;
+    QString uri = "https://esportex.herokuapp.com/participations/" + game_id + "?user_id=" + id;
 
     QByteArray request = requestDelete(uri);
 
@@ -538,7 +538,7 @@ bool Database::deleteParticipation(QString &game_id)
 
 QByteArray Database::getListParticipant(QString &game_id)
 {
-    QString uri = "http://10.0.0.22:3000/participations/" + game_id + "?task=2";
+    QString uri = "https://esportex.herokuapp.com/participations/" + game_id + "?task=2";
 
     QByteArray request = requestGet(uri);
 
@@ -549,7 +549,7 @@ QByteArray Database::getListParticipant(QString &game_id)
 
 int Database::countParticipation(QString &user_id)
 {
-    QString uri = "http://10.0.0.22:3000/participations/0?user_id=" + user_id + "&task=3";
+    QString uri = "https://esportex.herokuapp.com/participations/0?user_id=" + user_id + "&task=3";
 
     QByteArray request = requestGet(uri);
 

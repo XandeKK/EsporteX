@@ -4,6 +4,7 @@ import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 import "../Control/"
 import "js/CreateAccount.js" as JS
+import "../"
 
 
 Page {
@@ -42,8 +43,8 @@ Page {
                 dialog.close()
                 _database.postUser(
                             fieldName.text,
-                            comboBoxState.currentIndex + 1,
-                            comboBoxCity.currentIndex + 1,
+                            PropertyVar.statesArray[comboBoxState.currentIndex],
+                            PropertyVar.citiesArray[comboBoxCity.currentIndex],
                             fieldTwitter.text,
                             fieldInstagram.text,
                             fieldDescription.text,
@@ -308,7 +309,7 @@ Page {
                 ComboBox {
                     id: comboBoxCity
                     width: parent.width * 77 / 100
-                    model: JS.getCities(comboBoxState.currentIndex + 1)
+                    model: JS.getCities(PropertyVar.statesArray[comboBoxState.currentIndex])
 
                     font.pixelSize: fontSizeNormal
                 }

@@ -7,4 +7,7 @@ QtObject {
     property int people_id
     property bool changeUser: false
     property bool isGuest: false
+    property var statesArray: []
+    property var citiesArray: []
+    property var sportsArray: []
 }

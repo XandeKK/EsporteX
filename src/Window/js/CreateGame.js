@@ -36,6 +36,7 @@ function isValidDate(dateString) {
 }
 
 function getSports(){
+    PropertyVar.sportsArray = []
     let dataJson = _database.getSports()
 
     dataJson = JSON.parse(dataJson)
@@ -43,6 +44,7 @@ function getSports(){
     let arrayCSports = []
 
     for(let i=0; i<dataJson.length; i++){
+        PropertyVar.sportsArray.push(dataJson[i]["id"])
         arrayCSports.push(dataJson[i]["sport"])
     }
 

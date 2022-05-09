@@ -37,13 +37,13 @@ Page {
 
             onAccepted: {
                 _database.putUser(fieldName.text,
-                                   fieldTwitter.text,
-                                   fieldInstagram.text,
-                                   fieldDescription.text,
-                                   comboBoxState.currentText,
-                                   comboBoxCity.currentText,
-                                   comboBoxState.currentIndex + 1,
-                                   comboBoxCity.currentIndex + 1)
+                                  fieldTwitter.text,
+                                  fieldInstagram.text,
+                                  fieldDescription.text,
+                                  comboBoxState.currentText,
+                                  comboBoxCity.currentText,
+                                  PropertyVar.statesArray[comboBoxState.currentIndex],
+                                  PropertyVar.citiesArray[comboBoxCity.currentIndex])
                 dialog.close()
                 PropertyVar.changeUser = !PropertyVar.changeUser
                 stack.pop()
@@ -129,7 +129,6 @@ Page {
                     id: comboBoxState
                     width: parent.width * 82 / 100
                     model: JS.getStates()
-                    currentIndex: info["state_id"] - 1
 
                     font.pixelSize: fontSizeNormal
                 }
@@ -152,8 +151,7 @@ Page {
                 ComboBox {
                     id: comboBoxCity
                     width: parent.width * 82 / 100
-                    model: JS.getCities(comboBoxState.currentIndex + 1)
-                    currentIndex: info["city_id"] - 1
+                    model: JS.getCities(PropertyVar.statesArray[comboBoxState.currentIndex])
 
                     font.pixelSize: fontSizeNormal
                 }

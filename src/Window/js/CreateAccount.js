@@ -1,4 +1,5 @@
 function getStates(){
+    PropertyVar.statesArray = []
     let dataJson = _database.getStates()
 
     dataJson = JSON.parse(dataJson)
@@ -6,6 +7,7 @@ function getStates(){
     let arrayStates = []
 
     for(let i=0; i<dataJson.length; i++){
+        PropertyVar.statesArray.push(dataJson[i]["id"])
         arrayStates.push(dataJson[i]["state"])
     }
 
@@ -14,6 +16,7 @@ function getStates(){
 
 
 function getCities(state_id){
+    PropertyVar.citiesArray = []
     let dataJson = _database.getCities(state_id)
 
     dataJson = JSON.parse(dataJson)
@@ -21,6 +24,8 @@ function getCities(state_id){
     let arrayCities = []
 
     for(let i=0; i<dataJson.length; i++){
+        console.log(i + ": " + dataJson[i]["id"] + " - " + dataJson[i]["city"])
+        PropertyVar.citiesArray.push(dataJson[i]["id"])
         arrayCities.push(dataJson[i]["city"])
     }
 

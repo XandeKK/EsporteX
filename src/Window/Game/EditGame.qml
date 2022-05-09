@@ -99,7 +99,6 @@ Page {
                     id: comboBoxSport
                     width: parent.width * 82 / 100
                     model: FuncCreateGame.getSports()
-                    currentIndex: infoGame["sport"]["id"] - 1
 
                     font.pixelSize: fontSizeNormal
                 }
@@ -123,8 +122,7 @@ Page {
                 ComboBox {
                     id: comboBoxState
                     width: parent.width * 82 / 100
-                    model: FuncAddress.getStates() // Colocar no atual
-                    currentIndex: infoGame["state"]["id"] - 1
+                    model: FuncAddress.getStates()
 
                     font.pixelSize: fontSizeNormal
                 }
@@ -148,8 +146,7 @@ Page {
                 ComboBox {
                     id: comboBoxCity
                     width: parent.width * 82 / 100
-                    model: FuncAddress.getCities(comboBoxState.currentIndex + 1) // Colocar no atual
-                    currentIndex: infoGame["city"]["id"] - 1
+                    model: FuncAddress.getCities(PropertyVar.statesArray[comboBoxState.currentIndex])
 
                     font.pixelSize: fontSizeNormal
                 }
